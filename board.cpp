@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <random>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -35,9 +36,9 @@ namespace ariel
         // Assign the land types and numbers to the tiles
         for (int i = 0; i < 19; i++)
         {
-            if (landTypes[i] == "desert")//so do a swap
+            if (landTypes[i] == "desert") // so do a swap
             {
-                numbers[findZero(numbers)]=numbers[i];
+                numbers[findZero(numbers)] = numbers[i];
                 numbers[i] = 0;
             }
         }
@@ -46,12 +47,14 @@ namespace ariel
         {
             setNumAndType(i, numbers[i], landTypes[i]);
         }
-
     }
 
-    int Board::findZero(vector<int> numbers){
-        for (int i =0; i<sizeof(numbers); i++){
-            if(numbers[i] == 0){
+    int Board::findZero(vector<int> numbers)
+    {
+        for (int i = 0; i < sizeof(numbers); i++)
+        {
+            if (numbers[i] == 0)
+            {
                 return i;
             }
         }
@@ -66,18 +69,21 @@ namespace ariel
 
     void Board::printBoard() const
     {
+        cout << endl;
+        cout << endl;
         std::vector<int> rows = {3, 4, 5, 4, 3};
         int index = 0;
         for (int row : rows)
         {
-            for (int i = 0; i < 5-row; i++)
+            for (int i = 0; i < 5 - row; i++)
             {
-                cout<<"      ";
+                cout << "      ";
             }
-            
+
             for (int i = 0; i < row; i++)
             {
-                cout << tiles[index].getType() << "(" << tiles[index].getNum()<<")";
+                cout << tiles[index].getType() << "(" << tiles[index].getNum() << ")";
+                // tiles[index].printTile();
                 if (i < row - 1)
                     std::cout << "   ";
                 index++;
@@ -85,6 +91,72 @@ namespace ariel
             cout << endl;
             cout << endl;
             cout << endl;
+        }
+    }
+
+    void Board::printBoard2() const
+    {
+        std::vector<int> rows = {3, 4, 5, 4, 3};
+        int index = 0;
+
+        for (int row = 0; row < rows.size(); row++)
+        {
+            int numTiles = rows[row];
+
+            for (int line = 0; line < 11; line++) // Each hexagon now takes 9 lines
+            {
+                for (int space = 0; space < 5 - numTiles; space++)
+                {
+                    cout << "           "; // Leading spaces for each row
+                }
+
+                for (int i = 0; i < numTiles; i++)
+                {
+                    switch (line)
+                    {
+                    case 0:
+                        cout << "   *********   ";
+                        break;
+                    case 1:
+                        cout << "  *         *  ";
+                        break;
+                    case 2:
+                        cout << " *           * ";
+                        break;
+                    case 3:
+                        cout << "*             *";
+                        break;
+                    case 4:
+                        cout << "* " << tiles[index].getType() << "(" << tiles[index].getNum() << ")       *";
+                        break;
+                    case 5:
+                        cout << "*             *";
+                        break;
+                    case 6:
+                        cout << " *           * ";
+                        break;
+                    case 7:
+                        cout << "  *         *  ";
+                        break;
+                    case 8:
+                        cout << "   *********   ";
+                        break;
+                    }
+
+                    if (i < numTiles - 1)
+                    {
+                        if (line == 0 || line == 8)
+                            cout << " ";
+                        else
+                            cout << "   ";
+                    }
+                    if (line == 8 && i == numTiles - 1)
+                        index++;
+                }
+                cout << endl;
+                if (line == 8)
+                    index += numTiles - 1; // Adjust index for the next row
+            }
         }
     }
 
@@ -173,60 +245,59 @@ namespace ariel
     };
 
     std::map<int, std::vector<int>> Board::node_to_adjacentNode = {
-        {1, {2,9}},
-        {2, {1,3}},
-        {3, {2,4,11}},
-        {4, {3,5}},
-        {5, {4,6,13}},
-        {6, {5,7}},
-        {7, {6,15}},
-        {8, {9,18}},
-        {9, {8,10}},
-        {10, {9,11,20}},
-        {11, {10,12,3}},
-        {12, {11,13,22}},
-        {13, {12,14,5}},
-        {14, {13,15,24}},
-        {15, {14,16,7}},
-        {16, {15,26}},
-        {17, {18,28}},
-        {18, {17,19,8}},
-        {19, {18,20,30}},
-        {20, {19,21,10}},
-        {21, {20,22,32}},
-        {22, {21,23,12}},
-        {23, {22,24,34}},
-        {24, {23,25,14}},
-        {25, {24,26,36}},
-        {26, {25,27,16}},
-        {27, {26,38}},
-        {28, {29,17}},
-        {29, {28,30,39}},
-        {30, {29,31,19}},
-        {31, {30,32,41}},
-        {32, {31,33,21}},
-        {33, {32,34,43}},
-        {34, {33,35,23}},
-        {35, {34,36,45}},
-        {36, {35,37,25}},
-        {37, {36,38,47}},
-        {38, {37,27}},
-        {39, {40,29}},
-        {40, {39,41,48}},
-        {41, {40,42,31}},
-        {42, {41,43,50}},
-        {43, {42,44,33}},
-        {44, {43,45,52}},
-        {45, {44,46,35}},
-        {46, {45,47,54}},
-        {47, {46,37}},
-        {48, {49,40}},
-        {49, {48,50}},
-        {50, {49,51,42}},
-        {51, {50,52}},
-        {52, {51,53,44}},
-        {53, {52,54}},
-        {54, {53,46}}
-        };
-        
+        {1, {2, 9}},
+        {2, {1, 3}},
+        {3, {2, 4, 11}},
+        {4, {3, 5}},
+        {5, {4, 6, 13}},
+        {6, {5, 7}},
+        {7, {6, 15}},
+        {8, {9, 18}},
+        {9, {8, 10}},
+        {10, {9, 11, 20}},
+        {11, {10, 12, 3}},
+        {12, {11, 13, 22}},
+        {13, {12, 14, 5}},
+        {14, {13, 15, 24}},
+        {15, {14, 16, 7}},
+        {16, {15, 26}},
+        {17, {18, 28}},
+        {18, {17, 19, 8}},
+        {19, {18, 20, 30}},
+        {20, {19, 21, 10}},
+        {21, {20, 22, 32}},
+        {22, {21, 23, 12}},
+        {23, {22, 24, 34}},
+        {24, {23, 25, 14}},
+        {25, {24, 26, 36}},
+        {26, {25, 27, 16}},
+        {27, {26, 38}},
+        {28, {29, 17}},
+        {29, {28, 30, 39}},
+        {30, {29, 31, 19}},
+        {31, {30, 32, 41}},
+        {32, {31, 33, 21}},
+        {33, {32, 34, 43}},
+        {34, {33, 35, 23}},
+        {35, {34, 36, 45}},
+        {36, {35, 37, 25}},
+        {37, {36, 38, 47}},
+        {38, {37, 27}},
+        {39, {40, 29}},
+        {40, {39, 41, 48}},
+        {41, {40, 42, 31}},
+        {42, {41, 43, 50}},
+        {43, {42, 44, 33}},
+        {44, {43, 45, 52}},
+        {45, {44, 46, 35}},
+        {46, {45, 47, 54}},
+        {47, {46, 37}},
+        {48, {49, 40}},
+        {49, {48, 50}},
+        {50, {49, 51, 42}},
+        {51, {50, 52}},
+        {52, {51, 53, 44}},
+        {53, {52, 54}},
+        {54, {53, 46}}};
+
 }

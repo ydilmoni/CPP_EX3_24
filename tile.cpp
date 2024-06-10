@@ -1,5 +1,6 @@
 #include "tile.hpp"
 #include <map>
+#include <iostream>
 using namespace std;
 
 namespace ariel
@@ -21,90 +22,115 @@ namespace ariel
     {
         this->landType = newType;
     }
-    int Tile::getNum() const{
+    int Tile::getNum() const
+    {
         return this->number;
     }
-    string Tile::getType() const{
+    string Tile::getType() const
+    {
         return this->landType;
     }
+    void Tile::printTile() const
+    {
+        hexagon();
+    }
 
-    std::map<int, std::vector<int>> Tile::tileLocation_to_adjacentNode = {
-        {1, {1, 2, 3, 9, 10, 11}},
-        {2, {3, 4, 5, 11, 12, 13}},
-        {3, {5, 6, 7, 13, 14, 15}},
-        {4, {8, 9, 10, 18, 19, 20}},
-        {5, {10, 11, 12, 20, 21, 22}},
-        {6, {12, 13, 14, 22, 23, 24}},
-        {7, {14, 15, 16, 24, 25, 26}},
-        {8, {17, 18, 19, 28, 29, 30}},
-        {9, {19, 20, 21, 30, 31, 32}},
-        {10, {21, 22, 23, 32, 33, 34}},
-        {11, {23, 24, 25, 34, 35, 36}},
-        {12, {25, 26, 27, 36, 37, 38}},
-        {13, {29, 30, 31, 39, 40, 41}},
-        {14, {31, 32, 33, 41, 42, 43}},
-        {15, {33, 34, 35, 43, 44, 45}},
-        {16, {35, 36, 37, 45, 46, 47}},
-        {17, {40, 41, 42, 48, 49, 50}},
-        {18, {42, 43, 44, 50, 51, 52}},
-        {19, {44, 45, 46, 52, 53, 54}}};
+    void Tile::hexagon() const
+    {
+        int side = 3;
+        int space = 2;
+        space = space > side - 1 ? space : side;
 
-    std::map<int, std::vector<int>> Tile::node_to_adjacentTile = {
-        {1, {1}},
-        {2, {1}},
-        {3, {1, 2}},
-        {4, {2}},
-        {5, {2, 3}},
-        {6, {3}},
-        {7, {3}},
-        {8, {4}},
-        {9, {4, 1}},
-        {10, {1, 4, 5}},
-        {11, {1, 2, 5}},
-        {12, {2, 5, 6}},
-        {13, {2, 3, 6}},
-        {14, {3, 6, 7}},
-        {15, {3, 7}},
-        {16, {7}},
-        {17, {8}},
-        {18, {4, 8}},
-        {19, {4, 8, 9}},
-        {20, {4, 9, 5}},
-        {21, {10, 5, 9}},
-        {22, {10, 5, 6}},
-        {23, {10, 6, 11}},
-        {24, {11, 6, 7}},
-        {25, {11, 7, 12}},
-        {26, {12, 7}},
-        {27, {12}},
-        {28, {8}},
-        {29, {8, 13}},
-        {30, {8, 13, 9}},
-        {31, {9, 13, 14}},
-        {32, {9, 14, 10}},
-        {33, {10, 14, 15}},
-        {34, {10, 15, 11}},
-        {35, {11, 15, 16}},
-        {36, {11, 16, 12}},
-        {37, {12, 16}},
-        {38, {12}},
-        {39, {13}},
-        {40, {13, 17}},
-        {41, {13, 17, 14}},
-        {42, {14, 17, 18}},
-        {43, {14, 18, 15}},
-        {44, {15, 18, 19}},
-        {45, {15, 19, 16}},
-        {46, {16, 19}},
-        {47, {16}},
-        {48, {17}},
-        {49, {17}},
-        {50, {17, 18}},
-        {51, {18}},
-        {52, {18, 19}},
-        {53, {19}},
-        {54, {19}},
+        // first row
+        for (int j = 1; j <= space; j++)
+        {
+            std::cout << " ";
+        }
+        for (int i = 1; i <= side; i++)
+        {
+            if (i == 1 || i == side)
+            {
+                std::cout << "* ";
+            }
+            else
+            {
+                std::cout << "- ";
+            }
+        }
+        cout << endl;
+        space--;
+        // upper rows
+        for (int i = 1; i <= side - 2; i++)
+        {
+            int numChars = side + i - 1;
 
-    };
+            for (int j = 1; j <= space; j++)
+            {
+                std::cout << " ";
+            }
+            std::cout << "/";
+            for (int k = 1; k <= numChars; k++)
+            {
+                std::cout << "  ";
+            }
+            std::cout << "\\ ";
+            cout << endl;
+            space--;
+        }
+        space--;
+        // middle row
+        for (int j = 1; j <= space * 2 + 1; j++)
+        {
+            std::cout << " ";
+        }
 
+        string data = this->getType() + " (" + to_string(this->getNum())+")";
+        for (int j = 1; j <= side * 2; j++)
+        {
+            if (j == 1 || j == side * 2)
+            {
+                std::cout << "*";
+            }
+            else
+            {
+                std::cout << data;
+            }
+        }
+        cout << endl;
+        space++;
+        // bottom rows
+        for (int i = 1; i <= side - 2; i++)
+        {
+            int numChars = side * 2 - i - 2;
+            for (int j = 1; j <= space; j++)
+            {
+                std::cout << " ";
+            }
+            std::cout << " \\";
+            for (int k = 1; k <= numChars; k++)
+            {
+                std::cout << "  ";
+            }
+            std::cout << "/ ";
+            cout << endl;
+            space++;
+        }
+        // last row
+        for (int j = 1; j <= space + 1; j++)
+        {
+            std::cout << " ";
+        }
+        for (int i = 1; i <= side; i++)
+        {
+            if (i == 1 || i == side)
+            {
+                std::cout << "* ";
+            }
+            else
+            {
+                std::cout << "- ";
+            }
+        }
+        cout << endl;
+    }
 }

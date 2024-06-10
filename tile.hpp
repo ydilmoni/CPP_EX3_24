@@ -24,8 +24,8 @@ namespace ariel
         void setType (string newType);
         int getNum() const;
         string getType() const;
-        string getTypeAsString() const;
-
+        void printTile() const;
+        void hexagon()const;
         // Static member declaration
         static std::map<int, std::vector<int>> tileLocation_to_adjacentNode;
         static std::map<int, std::vector<int>> node_to_adjacentTile;

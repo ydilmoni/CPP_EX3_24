@@ -11,6 +11,10 @@ main:tile.cpp cardType.hpp main.cpp board.cpp deck.cpp catan.cpp player.cpp
 	$(CXX) $^ -o main.exe
 	./main.exe
 
+justmain:main.cpp
+	$(CXX) $^ -o main.exe
+	./main.exe
+
 test: Algorithms.cpp Graph.cpp Test.cpp
 	$(CXX) $^ -o test.exe
 	./test.exe

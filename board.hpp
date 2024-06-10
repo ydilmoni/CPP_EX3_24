@@ -16,6 +16,7 @@ namespace ariel
 
     public:
         void printBoard() const;
+        void printBoard2()const;
         std::vector<Tile> tiles;
         Board();
 

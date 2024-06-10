@@ -1,6 +1,8 @@
 #ifndef CATAN_HPP
 #define CATAN_HPP
 #include <string>
+#include <vector>
+#include <iostream>
 #include "board.hpp"
 #include "player.hpp"
 #include "deck.hpp"
@@ -22,9 +24,19 @@ namespace ariel
         Deck oreDeck = Deck("ore");
         Deck sheepDeck = Deck("wool");
 
-        vector<Player*> occupiedNode;
-        Catan(Player& p1, Player& p2, Player& p3);
+        map<pair<int,int>,Player*> occupiedEdge;
+        vector<pair<Player*, string>> occupiedNode;
+        Catan(Player &p1, Player& p2, Player &p3);
         Catan();
+
+        void startGame();
+        void selectFunction();
+        void first2village();
+        void putVillageAndRoad(int index);
+        void setOccupiedEdge(int start, int end, Player &player);
+        vector<pair<int, int>> getUnoccupiedConnectedEdges(int villagePlace) const;
+        void initializingOccupiedEdge();
+        void printOccupiedEdges() const;
     };
 
 }
