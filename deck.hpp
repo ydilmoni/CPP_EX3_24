@@ -4,6 +4,7 @@
 #include "cardType.hpp"
 #include <vector>
 #include <stack>
+#include <string>
 using namespace std;
 using namespace ariel;
 namespace ariel
@@ -11,18 +12,17 @@ namespace ariel
     class Deck
     {
     public:
+        vector<string> cardDeck;
         Deck();
-        DevelopType drawCard();
+        Deck(string source);
+        string drawCard();
         bool isEmpty() const;
-        size_t size;
-        stack<DevelopType> deck;
-        void setStartingDeck(size_t index, DevelopType type);
-        void printArray();
+        int size = cardDeck.size();
+        stack<string> deck;
         void printDeck();
 
     private:
-        vector<DevelopType> startingStack;
-        void initializeDeck();
+        void ShuffleCards();
     };
 }
 

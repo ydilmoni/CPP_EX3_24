@@ -27,7 +27,8 @@ namespace ariel{
         int public_score;
 
         Player(string name);
-        ~Player();
+        Player();
+        void setName(string newName);
         void buyDvlpCard();
         void buildCity();
         void buildVillage();

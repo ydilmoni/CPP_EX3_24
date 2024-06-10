@@ -11,13 +11,13 @@ namespace ariel{
         resources[ore] = 0;
     }
 
-    Player::~Player()
+    Player::Player()
     {
+        Player("guest");
     }
-    void Player::buyDvlpCard()
+    void Player::setName(string newName)
     {
-        if (resources[wool] >= 1 && resources[ore] >= 1 && resources[grain] >= 1){
-            
-        }
+        this->name = newName;
     }
+    
 }

@@ -1,8 +1,10 @@
 #include <iostream>
-#include "board.hpp"
+#include "catan.hpp"
 
 int main()
 {
-    ariel::Board board;
+
+    ariel::Catan game;
+    
     return 0;
 }

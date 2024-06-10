@@ -4,89 +4,65 @@
 #include <thread>
 #include <random>
 #include <iostream>
-
-#define NUM_OF_KNIGHT 14
-#define NUM_OF_VP 4
-#define NUM_OF_OTHER 2
-#define NUM_OF_DVL_CARD NUM_OF_KNIGHT + NUM_OF_VP + (NUM_OF_OTHER * 3)
+#include <algorithm>
 
 namespace ariel
 {
-    Deck::Deck()
+
+    Deck::Deck()  // Development card deck
     {
-        initializeDeck();
+
+        for (int i = 0; i < 19; i++)
+        {
+            cardDeck.push_back("knight");
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            cardDeck.push_back("victory point");
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            cardDeck.push_back("build 2 road");
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            cardDeck.push_back("year of plenty");
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            cardDeck.push_back("monopoly");
+        }
+        ShuffleCards();
     }
 
-    void Deck::initializeDeck()
+    Deck::Deck(string source)  // Sources card decks
     {
-        startingStack = {NUM_OF_DVL_CARD, none};
-        size = 0;
-        size_t i;
-
-        for (i = 0; i < NUM_OF_KNIGHT; i++)
+        for (int i = 0; i < 19; i++)
         {
-            setStartingDeck(i, knight);
-            // cout<<"startingStack["<<i<<"] =" << startingStack[i]<<endl;
-            // std::this_thread::sleep_for(std::chrono::seconds(1));
+            cardDeck.push_back(source);
         }
-
-        for (i; i < NUM_OF_KNIGHT + NUM_OF_VP; i++)
-        {
-            setStartingDeck(i, victory_point);
-            // cout<<"startingStack["<<i<<"] =" << startingStack[i]<<endl;
-            // std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-
-        for (i; i < NUM_OF_DVL_CARD; i++)
-        {
-
-            setStartingDeck(i, road_building);
-            // cout<<"startingStack["<<i<<"] =" << startingStack[i]<<endl;
-            // std::this_thread::sleep_for(std::chrono::seconds(1));
-            i++;
-            setStartingDeck(i, monopoly);
-            // cout<<"startingStack["<<i<<"] =" << startingStack[i]<<endl;
-            // std::this_thread::sleep_for(std::chrono::seconds(1));
-            i++;
-            setStartingDeck(i, year_of_plenty);
-            // cout<<"startingStack["<<i<<"] =" << startingStack[i]<<endl;
-            // std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-        // cout<<"size = "<<size<<endl;
-
-        // cout << NUM_OF_DVL_CARD<<endl;
-        // std::this_thread::sleep_for(std::chrono::seconds(5));
-        while (size < NUM_OF_DVL_CARD - 1)
-        {
-            int num = NUM_OF_DVL_CARD;
-            size_t n = rand() % num;
-            // cout<<"startingStack[" << n<<"] = "<<startingStack[n]<<endl;
-            if (startingStack[n] != none)
-            {
-                deck.push(startingStack[n]);
-                setStartingDeck(n, none);
-                size++;
-                // cout<<"size = "<<size<<endl;
-                // if (size % 5 ==0){
-                //     printArray();
-                // }
-                // std::this_thread::sleep_for(std::chrono::seconds(1));
-            }
-        }
-        cout << "DONE!!!" << endl;
-        printDeck();
     }
 
-    DevelopType Deck::drawCard()
+    void Deck::ShuffleCards() // this function from chatGPT
+    {
+
+        random_device rd;
+        mt19937 g(rd());
+        shuffle(cardDeck.begin(), cardDeck.end(), g);
+
+    }
+
+    string Deck::drawCard()
     {
         if (isEmpty())
         {
             cout << "No more cards to draw" << endl;
-            return none;
+            return NULL;
         }
 
-        DevelopType card = deck.top();
-        deck.pop();
+        string card = cardDeck.back();
+        cardDeck.pop_back();
+        size--;
         return card;
     }
 
@@ -94,28 +70,12 @@ namespace ariel
     {
         return size == 0;
     }
-    void Deck::setStartingDeck(size_t index, DevelopType type)
-    {
-        startingStack[index] = type;
-    }
-
-    void Deck::printArray()
-    {
-        for (size_t i = 0; i < NUM_OF_DVL_CARD; i++)
-        {
-            cout << startingStack[i] << ", ";
-        }
-        cout << endl;
-    }
 
     void Deck::printDeck()
     {
-        while (!isEmpty())
+        for (size_t i = 0; i < cardDeck.size(); i++)
         {
-            DevelopType card = deck.top();
-            deck.pop();
-            cout << card << endl;
-            --size;
+            cout << cardDeck[i] << endl;
         }
     }
 }

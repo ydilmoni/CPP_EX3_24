@@ -7,10 +7,9 @@ VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 SOURCES=player.cpp tile.cpp cardType.hpp deck.cpp main.cpp
 OBJECTS=$(subst .cpp,.o,$(SOURCES))
 
-main:tile.cpp cardType.hpp main.cpp board.cpp
+main:tile.cpp cardType.hpp main.cpp board.cpp deck.cpp catan.cpp player.cpp
 	$(CXX) $^ -o main.exe
 	./main.exe
-
 
 test: Algorithms.cpp Graph.cpp Test.cpp
 	$(CXX) $^ -o test.exe
