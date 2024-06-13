@@ -29,14 +29,25 @@ namespace ariel
         Catan(Player &p1, Player& p2, Player &p3);
         Catan();
 
-        void startGame();
+        void startGame();//first 2 village
+        void restOfGame(); //the rest of the game
         void selectFunction();
-        void first2village();
-        void putVillageAndRoad(int index);
-        void setOccupiedEdge(int start, int end, Player &player);
-        vector<pair<int, int>> getUnoccupiedConnectedEdges(int villagePlace) const;
+        void first2village();//loop to make the build rotation
+        void putVillageAndRoad(int index); // function to help build vilage and road in the 2 first
+        void putVillage(int playerIndex); //build a village in the rest of the game
+        void putRoad(int playerIndex); // build a road in the rest of the game
+
+        //node
+        void initializingOccupiedNode();  // initializing all the node to nullptr in the start of the game
+        void setOccupiedNode(int nodeIndex, Player &player, string buildingType); // Put data into the node vec
+        void printNodeInformation() const; // print the occupied node
+        
+
+        // edge
         void initializingOccupiedEdge();
-        void printOccupiedEdges() const;
+        void setOccupiedEdge(int start, int end, Player &player); // Put data into the edges map
+        vector<pair<int, int>> getUnoccupiedConnectedEdges(int villagePlace) const; // return all the unoccupied edge the related to "villagePlace"
+        void printOccupiedEdges() const; // print the occupied edge
     };
 
 }

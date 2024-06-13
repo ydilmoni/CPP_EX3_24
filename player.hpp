@@ -36,7 +36,7 @@ namespace ariel
         void build(string whatToBuild);
         bool iHave(string cardName);
         bool iHave(string cardName, int amount);
-        vector<string>iCanbuild();
+        vector<string>iCanBuild();
         void addRoad();
         void addVillage();
         void addCity();

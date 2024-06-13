@@ -63,7 +63,7 @@ namespace ariel
 
     void Player::build()
     {
-        vector<string> myOption = this->iCanbuild();
+        vector<string> myOption = this->iCanBuild();
         if (myOption.size() > 0)
         {
             cout << "You can build: " << endl;
@@ -136,7 +136,7 @@ namespace ariel
         return false;
     }
 
-    vector<string> Player::iCanbuild()
+    vector<string> Player::iCanBuild()
     {
         vector<string> myOption;
         if (this->iHave("wood") && this->iHave("brick"))
@@ -163,6 +163,7 @@ namespace ariel
 
     void Player::addRoad()
     {
+
         used_road++;
     }
     void Player::addVillage()

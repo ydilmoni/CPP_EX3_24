@@ -5,6 +5,14 @@
 #include <string>
 #include <iomanip>
 
+#define RESET   "\033[0m"
+#define RED     "\033[31m"      /* Red */
+#define BLACK   "\033[30m"      /* Black */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define WHITE   "\033[37m"      /* White */
+#define BROWN   "\033[38;5;130m" /* Brown */
+#define CAMEL   "\033[38;5;180m" /* Camel */
+
 using namespace std;
 
 namespace ariel
@@ -17,12 +25,12 @@ namespace ariel
             tiles[i] = Tile(i + 1);
         }
         vector<string> landTypes = {
-            "forest", "forest", "forest", "forest",
-            "hills", "hills", "hills",
-            "fields", "fields", "fields", "fields",
-            "pasture", "pasture", "pasture", "pasture",
-            "mountains", "mountains", "mountains",
-            "desert"};
+            "W", "W", "W", "W",
+            "B", "B", "B",
+            "G", "G", "G", "G",
+            "S", "S", "S", "S",
+            "O", "O", "O",
+            "D"};
 
         std::vector<int> numbers = {
             2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, 0};
@@ -36,7 +44,7 @@ namespace ariel
         // Assign the land types and numbers to the tiles
         for (int i = 0; i < 19; i++)
         {
-            if (landTypes[i] == "desert") // so do a swap
+            if (landTypes[i] == "D") // so do a swap
             {
                 numbers[findZero(numbers)] = numbers[i];
                 numbers[i] = 0;
@@ -82,7 +90,31 @@ namespace ariel
 
             for (int i = 0; i < row; i++)
             {
-                cout << tiles[index].getType() << "(" << tiles[index].getNum() << ")";
+                if(tiles[index].getType() == "W"){
+                     cout <<BROWN<< setw(5) << tiles[index].getType() << "(" << 
+                     tiles[index].getNum() << ")"<<RESET;
+                }
+                else if(tiles[index].getType() == "B"){
+                    cout <<RED<< setw(5) << tiles[index].getType() << "(" << 
+                    tiles[index].getNum() << ")"<<RESET;
+                }
+                else if(tiles[index].getType() == "G"){
+                    cout <<YELLOW<< setw(5) << tiles[index].getType() << "(" <<
+                    tiles[index].getNum() << ")"<<RESET;
+                }
+                else if(tiles[index].getType() == "S"){
+                    cout <<WHITE<< setw(5) << tiles[index].getType() << "(" <<
+                    tiles[index].getNum() << ")"<<RESET;
+                }
+                else if(tiles[index].getType() == "O"){
+                    cout <<BLACK<< setw(5) << tiles[index].getType() << "(" <<
+                    tiles[index].getNum() << ")"<<RESET;
+                }
+                else if(tiles[index].getType() == "D"){
+                    cout <<CAMEL<< setw(5) << tiles[index].getType() << "(" <<
+                    tiles[index].getNum() << ")"<<RESET;
+                }
+                
                 // tiles[index].printTile();
                 if (i < row - 1)
                     std::cout << "   ";
@@ -96,68 +128,7 @@ namespace ariel
 
     void Board::printBoard2() const
     {
-        std::vector<int> rows = {3, 4, 5, 4, 3};
-        int index = 0;
-
-        for (int row = 0; row < rows.size(); row++)
-        {
-            int numTiles = rows[row];
-
-            for (int line = 0; line < 11; line++) // Each hexagon now takes 9 lines
-            {
-                for (int space = 0; space < 5 - numTiles; space++)
-                {
-                    cout << "           "; // Leading spaces for each row
-                }
-
-                for (int i = 0; i < numTiles; i++)
-                {
-                    switch (line)
-                    {
-                    case 0:
-                        cout << "   *********   ";
-                        break;
-                    case 1:
-                        cout << "  *         *  ";
-                        break;
-                    case 2:
-                        cout << " *           * ";
-                        break;
-                    case 3:
-                        cout << "*             *";
-                        break;
-                    case 4:
-                        cout << "* " << tiles[index].getType() << "(" << tiles[index].getNum() << ")       *";
-                        break;
-                    case 5:
-                        cout << "*             *";
-                        break;
-                    case 6:
-                        cout << " *           * ";
-                        break;
-                    case 7:
-                        cout << "  *         *  ";
-                        break;
-                    case 8:
-                        cout << "   *********   ";
-                        break;
-                    }
-
-                    if (i < numTiles - 1)
-                    {
-                        if (line == 0 || line == 8)
-                            cout << " ";
-                        else
-                            cout << "   ";
-                    }
-                    if (line == 8 && i == numTiles - 1)
-                        index++;
-                }
-                cout << endl;
-                if (line == 8)
-                    index += numTiles - 1; // Adjust index for the next row
-            }
-        }
+        cout<<"void Board::printBoard2() const"<<endl;
     }
 
     Board::Board()

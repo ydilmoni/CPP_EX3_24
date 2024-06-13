@@ -12,8 +12,9 @@ namespace ariel
         this->players.push_back(p3);
         occupiedNode.resize(54, make_pair(nullptr, ""));
         initializingOccupiedEdge();
+        initializingOccupiedNode();
 
-        this->board.printBoard2();
+        this->board.printBoard();
     }
 
     Catan::Catan()
@@ -34,6 +35,15 @@ namespace ariel
         cout << endl;
 
         first2village();
+    }
+    
+    void Catan::restOfGame(){
+        bool someoneWin = false;
+        while (!someoneWin){
+            for (Player &p : players){
+                
+            }
+        }
     }
 
     void Catan::first2village()
@@ -56,16 +66,16 @@ namespace ariel
         cout << players[i].getName() << "'s turn" << endl;
         int place;
         cout << "Where would you like to build your first village? (1-54)" << endl;
+        printNodeInformation();
         cin >> place;
 
         while (place < 1 || place > 54 || occupiedNode[place - 1].first != NULL)
         {
             cout << "You have chosen a place that is already occupied or does not exist because it is not in the range 1-54,\
-                 please choose another place"
-                 << endl;
+                 please choose another place"<< endl;
             cin >> place;
         }
-        occupiedNode[place - 1] = make_pair(&players[i], "Village");
+        setOccupiedNode(place-1, players[i], "Village");
         players[i].addVillage();
         cout << "Village placed successfully!" << endl;
 
@@ -90,6 +100,53 @@ namespace ariel
         this->printOccupiedEdges();
 
         cout << endl;
+    }
+
+    void Catan::putVillage(int playerIndex)
+    {
+        int place;
+        cout << "Where would you like to build your village? (1-54)" << endl;
+        
+        cin >> place;
+
+        while (place < 1 || place > 54 || occupiedNode[place - 1].first != NULL)
+        {
+            cout << "You have chosen a place that is already occupied or does not exist because it is not in the range 1-54,\
+                 please choose another place"<< endl;
+            cin >> place;
+        }
+        occupiedNode[place - 1] = make_pair(&players[playerIndex], "Village");
+        players[playerIndex].addVillage();
+        cout << "Village placed successfully!" << endl;
+    }
+
+    void Catan::initializingOccupiedNode()
+    {
+        for (int i = 0; i < 54; i++){
+            occupiedNode.push_back(make_pair(nullptr, ""));
+        }
+    }
+
+    void Catan::setOccupiedNode(int nodeIndex, Player &player, string buildingType)
+    {
+        occupiedNode[nodeIndex] = make_pair(&player, buildingType);
+    }
+
+    void Catan::printNodeInformation() const
+    {
+        for (int i = 0; i < 54; i++)
+        {
+            if (occupiedNode[i].first != nullptr)
+            {
+                cout << "Node " << i + 1 << " is occupied by " << occupiedNode
+                [i].first->getName() << " with a " << occupiedNode[i].second <<
+                endl;
+            }
+            else
+            {
+                cout << "Node " << i + 1 << " is not occupied" << endl;
+            }   
+        }
     }
 
     void Catan::setOccupiedEdge(int start, int end, Player &player)
@@ -134,5 +191,6 @@ namespace ariel
             std::cout << std::endl;
         }
     }
+
 
 }

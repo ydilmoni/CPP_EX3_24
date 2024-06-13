@@ -8,7 +8,7 @@ namespace ariel
         wood,
         brick,
         grain,
-        wool,
+        ship,
         ore
     };
 
