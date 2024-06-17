@@ -12,12 +12,12 @@ main:tile.cpp cardType.hpp main.cpp board.cpp deck.cpp catan.cpp player.cpp
 	./main.exe
 
 justmain:main.cpp
-	$(CXX) $^ -o main.exe
+	$(CXX) $(CXXFLAGS) $^ -o main.exe
 	./main.exe
 
 test: Algorithms.cpp Graph.cpp Test.cpp
-	$(CXX) $^ -o test.exe
-	./test.exe
+	$(CXX) $(CXXFLAGS) $^ -o test.exe
+	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test.exe
 
 testCounter: TestCounter.o Test.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o testCounter.exe

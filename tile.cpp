@@ -11,6 +11,30 @@ namespace ariel
         this->landType = type;
         this->number = num;
         this->tile_location = location;
+        if (landType == "W")
+        {
+            this->collor = BROWN;
+        }
+        else if (landType == "G")
+        {
+            this->collor = YELLOW;
+        }
+        else if (landType == "O")
+        {
+            this->collor = BLACK;
+        }
+        else if (landType == "S")
+        {
+            this->collor = WHITE;
+        }
+        else if (landType == "B")
+        {
+            this->collor = RED;
+        }
+        else
+        {
+            this->collor = CAMEL;
+        }
     }
 
     void Tile::setNum(int newNum)
@@ -84,7 +108,7 @@ namespace ariel
             std::cout << " ";
         }
 
-        string data = this->getType() + " (" + to_string(this->getNum())+")";
+        string data = this->getType() + " (" + to_string(this->getNum()) + ")";
         for (int j = 1; j <= side * 2; j++)
         {
             if (j == 1 || j == side * 2)
@@ -133,4 +157,5 @@ namespace ariel
         }
         cout << endl;
     }
+    
 }

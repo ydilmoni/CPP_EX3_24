@@ -3,6 +3,13 @@
 
 #include <vector>
 #include "tile.hpp"
+#include "catan.hpp"
+#include <iostream>
+#include <algorithm>
+#include <random>
+#include <string>
+#include <iomanip>
+#include "player.hpp"
 
 namespace ariel
 {
@@ -16,9 +23,14 @@ namespace ariel
 
     public:
         void printBoard() const;
-        void printBoard2()const;
+        void printBoard2();
         std::vector<Tile> tiles;
         Board();
+        string p(int tileNum); // print tile information in the collor
+
+        string pr(int start, int end, string whatToPrint);
+
+        
 
         static std::map<int, std::vector<int>> tileLocation_to_adjacentNode;
         static std::map<int, std::vector<int>> node_to_adjacentTile;

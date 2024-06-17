@@ -2,30 +2,12 @@
 #include "catan.hpp"
 #include <iomanip>
 #include "function.cpp"
+using namespace ariel;
 
-int main()
-{
-    ariel::Catan g;
-    g.startGame();
-    
+//TODO: לבדוק למה לא רץ
+int main() {
+   ariel::Catan catan;
+   
+
     return 0;
 }
-
-// #include <iostream>
-// #include <vector>
-// #include <string>
-// #include <algorithm>
-// #include <iomanip>
-
-// using namespace std;
-
-
-// int main() {
-//     cout<<left<<setw(8)<<"ore";
-//     cout<<5<<endl;
-//     cout<<left<<setw(8)<<"brick";
-//     cout<<5<<endl;
-
-//     return 0;
-// }
-
