@@ -15,7 +15,7 @@ namespace ariel
     {
     private:
     public:
-        vector<Player> players;
+        vector<reference_wrapper<Player>> players;
         Board board;
         Deck dvlpCardDeck = Deck();
         Deck woodDeck = Deck("wood");
@@ -24,7 +24,7 @@ namespace ariel
         Deck oreDeck = Deck("ore");
         Deck sheepDeck = Deck("wool");
 
-        static map<pair<int, int>, Player *> gameEdges;
+        map<pair<int, int>, Player *> gameEdges;
         vector<pair<Player *, string>> gameNode;
         Catan(Player &p1, Player &p2, Player &p3);
         Catan();
@@ -88,7 +88,20 @@ namespace ariel
         }
 
         void chackFunction();
+
+        string p(int tileNum);                               // print tile information in the collor
+        string pr(int start, int end, string whatToPrint);   // print the road collor (use for diagonals)
+        string pr(int start, int end);                       // print the road collor
+        string p2(int nodeNum);                              // print node num in coolor and [] {} ()
+        string d1(int start, int end);                       // d1 is /
+        string d2(int start, int end);                       // d for diagonal d2 is '\'
+        string m(int start, int end);                        // m for middle
+        string ms(int amount, int firstStart, int firstEnd); // ms for middles , st - for startType
+
+        void printBoard2();
     };
+    std::string operator*(const std::string &s, int n);
+    std::string operator*(int n, const std::string &s);
 
 }
 

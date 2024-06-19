@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "tile.hpp"
-#include "catan.hpp"
 #include <iostream>
 #include <algorithm>
 #include <random>
@@ -23,12 +22,11 @@ namespace ariel
 
     public:
         void printBoard() const;
-        void printBoard2();
         std::vector<Tile> tiles;
         Board();
-        string p(int tileNum); // print tile information in the collor
+        
 
-        string pr(int start, int end, string whatToPrint);
+        
 
         
 

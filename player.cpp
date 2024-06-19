@@ -23,9 +23,13 @@ namespace ariel
     {
         Player("guest");
     }
+    string Player::getCollor() const
+    {
+        return this->collor;
+    }
     void Player::setCollor(string newCollor)
     {
-        collor = newCollor;
+        this->collor = newCollor;
     }
     void Player::setName(string newName)
     {

@@ -6,26 +6,35 @@
 #include <cstdlib>
 #include <ctime>
 
-#define BLUE "\033[34m"        /* Blue */
-#define GREEN "\033[32m"       /* Green */
-#define PURPLE "\033[35m"      /* Purple */
+#define RESET "\033[0m"
+#define BLUE "\033[34m"   /* Blue */
+#define GREEN "\033[32m"  /* Green */
+#define PURPLE "\033[35m" /* Purple */
 
 namespace ariel
 {
 
     Catan::Catan(Player &p1, Player &p2, Player &p3)
     {
-        this->players.push_back(p1);
+        this->players.push_back(ref(p1));
         p1.setCollor(BLUE);
-        this->players.push_back(p2);
+        this->players.push_back(ref(p2));
         p2.setCollor(GREEN);
-        this->players.push_back(p3);
+        this->players.push_back(ref(p3));
         p3.setCollor(PURPLE);
+        cout << string(RESET) << endl;
         gameNode.resize(54, make_pair(nullptr, ""));
         initializingGameEdges();
         initializingGameNode();
 
-        this->board.printBoard2();
+        this->printBoard2();
+        for (int i = 0; i < players.size(); i++)
+        {
+            cout << players[i].get().getCollor() << players[i].get().getName() << " collor" << RESET << endl;
+        }
+
+        // this->startGame();
+        // this->printBoard2();
     }
 
     Catan::Catan()
@@ -34,7 +43,7 @@ namespace ariel
         Player p2("Player 2");
         Player p3("Player 3");
 
-        *this = Catan(p1, p2, p3);
+        Catan(p1, p2, p3);
     }
 
     void Catan::chackFunction()
@@ -43,12 +52,153 @@ namespace ariel
         restOfGame();
     }
 
+    string Catan::p(int tileNum)
+    {
+        string result = string(this->board.tiles[tileNum].collor) + this->board.tiles[tileNum].getType() + string(this->board.tiles[tileNum].collor) + to_string(this->board.tiles[tileNum].getNum()) + string(RESET);
+        return result;
+    }
+
+    string Catan::pr(int start, int end, string whatToPrint)
+    {
+        string result = "";
+        string collor = RESET;
+        for (const auto &[edge, player] : gameEdges)
+        {
+            if (edge.first == start && edge.second == end && player != nullptr)
+            {
+                collor = player->getCollor();
+            }
+        }
+        result = string(collor) + whatToPrint + string(RESET);
+        return result;
+    }
+
+    string Catan::pr(int start, int end)
+    {
+        return p2(start) +string(RESET)+ "-"+ pr(start, end, "(R)") +string(RESET)+ "-"+ p2(end);
+    }
+
+    string Catan::p2(int nodeNum)
+    {
+        for (int i = 0; i < this->gameNode.size(); i++)
+        {
+            if (i == nodeNum)
+            {
+                if (gameNode[i].first != nullptr)
+                {
+                    if (gameNode[i].second == "Village")
+                    {
+                        return string(gameNode[i].first->getCollor()) + "[" + to_string(i) + "]"+string(RESET);
+                    }
+                    else if (gameNode[i].second == "City")
+                    {
+                        return string(gameNode[i].first->getCollor()) + "{" + to_string(i) + "}"+string(RESET);
+                    }
+                }
+                else
+                {
+                    return string(RESET) + "[" + to_string(i) + "]" +string(RESET);
+                }
+            }
+        }
+        cout << "cant find this num" << endl;
+    }
+
+    string Catan::d1(int start, int end)
+    {
+        return pr(start, end, "/");
+    }
+    
+    string Catan::d2(int start, int end)
+    {
+        return pr(start, end, "\\");
+    }
+    
+    string Catan::m(int start, int end)
+    {
+        return pr(start, end, "(R)");
+    }
+
+    string Catan::ms(int amount, int firstStart, int firstEnd)
+    {
+        int times = 9;
+        string space = " ";
+        string s;
+        for (int i = 0; i < amount; i++)
+        {
+            s += m(firstStart, firstEnd) + times * space;
+            firstStart++;
+            firstEnd++;
+        }
+        return s;
+    }
+
+    void Catan::printBoard2()
+    {
+        string output = "";
+        output += "     \n";
+        output += "                               " + pr(0, 1) + "    \n";
+        output += "                               /         \\  \n";
+        output += "                             " + ms(2, 0, 3) + "   \n";
+        output += "                             /             \\                              \n";
+        output += "                    " + pr(2, 3) + "     " + p(0) + "      " + pr(4, 5) + "   \n";
+        output += "                   /         \\             /         \\  \n";
+        output += "                 " + ms(4, 2, 7) + "    \n";
+        // output += "                 " + m(2,7) + "          " + m(3,8) + "         " +  m(4,9) + "          " +  m(5,10) + "    \n";
+        output += "                 /             \\         /             \\  \n";
+        output += "      " + pr(6, 7) + "      " + p(1) + "    " + pr(8, 9) + "      " + p(2) + "     " + pr(10, 11) + "                              \n";
+        output += "      /         \\             /         \\             /         \\            \n";
+        output += "    " + ms(6, 6, 12) + " \n";
+        // output += "    (0)          (0)         (0)          (0)         (0)          (0)                             \n";
+        output += "    /             \\         /             \\         /             \\                            \n";
+        output += "  " + p2(12) + "     " + p(3) + "    " + pr(13, 14) + "     " + p(4) + "   " + pr(15, 16) + "     " + p(5) + "     " + p2(17) + "                                   \n";
+        output += "    \\             /         \\             /         \\             /                  \n";
+        output += "    " + ms(6, 12, 18) + "       \n";
+        // output += "    (0)         (0)          (0)         (0)          (0)          (0)                              \n";
+        output += "      \\         /             \\         /             \\         /                \n";
+        output += "     " + pr(18, 19) + "     " + p(6) + "    " + pr(20, 21) + "     " + p(7) + "   " + pr(22, 23) + "                                   \n";
+        output += "      /         \\             /         \\             /         \\                  \n";
+        output += "    " + ms(6, 18, 24) + "      \n";
+        // output += "    (0)          (0)         (0)          (0)         (0)          (0)                              \n";
+        output += "    /             \\         /             \\         /             \\            \n";
+        output += "  " + p2(24) + "    " + p(8) + "     " + pr(25, 26) + "     " + p(9) + "     " + pr(27, 28) + "     " + p(10) + "   " + p2(29) + "                                   \n";
+        output += "    \\             /         \\             /         \\             /                   \n";
+        output += "    " + ms(6, 24, 30) + "                              \n";
+        // output += "    (0)         (0)          (0)         (0)          (0)          (0)                              \n";
+        output += "      \\         /             \\         /             \\         /                 \n";
+        output += "     " + pr(30, 31) + "    " + p(11) + "     " + pr(32, 33) + "     " + p(12) + "     " + pr(34, 35) + "                                    \n";
+        output += "      /         \\             /         \\             /         \\                    \n";
+        output += "    " + ms(6, 30, 36) + "                              \n";
+        // output += "    (0)          (0)         (0)          (0)         (0)          (0)                              \n";
+        output += "    /             \\         /             \\         /             \\                            \n";
+        output += "  " + p2(36) + "     " + p(13) + "     " + pr(37, 38) + "     " + p(14) + "   " + pr(39, 40) + "     " + p(15) + "   " + p2(41) + "                              \n";
+        output += "    \\             /         \\             /         \\             /          \n";
+        output += "    " + ms(6, 36, 42) + "       \n";
+        // output += "    (0)         (0)          (0)         (0)          (0)          (0)                             \n";
+        output += "      \\         /             \\         /             \\         /             \n";
+        output += "     " + pr(42, 43) + "    " + p(16) + "     " + pr(44, 45) + "    " + p(17) + "     " + pr(46, 47) + "                                    \n";
+        output += "                \\             /         \\             /                                                 \n";
+        output += "                " + ms(4, 43, 48) + "                           \n";
+        // output += "                 (0)         (0)          (0)         (0)                           \n";
+        output += "                  \\         /             \\         /                                 \n";
+        output += "                 " + pr(48, 49) + "     " + p(18) + "   " + pr(50, 51) + "                                         \n";
+        output += "                            \\             /                                            \n";
+        output += "                            " + ms(2, 49, 52) + "                                  \n";
+        // output += "                              (0)         (0)                                  \n";
+        output += "                              \\         /                                   \n";
+        output += "                             " + pr(52, 53) + "                                         \n";
+
+        cout << "rint the board" << endl;
+        cout << output << endl;
+    }
+
     void Catan::startGame()
     {
+
         random_device rd;
         mt19937 g(rd());
         shuffle(players.begin(), players.end(), g);
-        cout << "Starting the game, the first player is " << players[0].getName() << endl;
+        cout << "Starting the game, the first player is " << players[0].get().getCollor() << players[0].get().getName() << RESET << endl;
         cout << endl;
         // this_thread::sleep_for(chrono::seconds(5));
 
@@ -71,14 +221,14 @@ namespace ariel
 
     void Catan::putVillageAndRoad(int playerIndex)
     {
-        cout << players[playerIndex].getName() << "'s turn" << endl;
+        cout << players[playerIndex].get().getCollor() << players[playerIndex].get().getName() << "'s turn" << RESET << endl;
         int place;
-        vector<int> villageOption = getUnoccupiedNodeVector();
+        // vector<int> villageOption = getUnoccupiedNodeVector();
         cout << "Where would you like to build your village?" << endl;
-        printVector(villageOption);
+        // printVector(villageOption);
         cout << endl
              << endl;
-        cout << "Choose location for your tile" << endl;
+        cout << "Choose location for your village" << endl;
         cin >> place;
 
         while (place < 0 || place > 53 || gameNode[place].first != NULL || !canBuildThere(place))
@@ -90,8 +240,8 @@ namespace ariel
         }
 
         setGameNode(place, players[playerIndex], "Village");
-        players[playerIndex].addVillage();
-        cout << players[playerIndex].getName() << "put a Village in node " << place << endl;
+        players[playerIndex].get().addVillage();
+        cout << players[playerIndex].get().getCollor() << players[playerIndex].get().getName() << " put a Village in node " << place << RESET << endl;
 
         cout << "Where would you like to build your Road?" << endl;
         vector<pair<int, int>> myOption = getUnoccupiedConnectedEdges(place);
@@ -109,10 +259,11 @@ namespace ariel
         }
         this->setGameEdges(myOption[option].first, myOption[option].second, players[playerIndex]);
 
-        cout << players[playerIndex].getName() << "put a road in " << myOption[option].first << " , " << myOption[option].second << endl;
+        cout << players[playerIndex].get().getCollor() << players[playerIndex].get().getName() << "put a road in " << myOption[option].first << " , " << myOption[option].second << RESET << endl;
 
-        this->printAllGameEdges();
+        // this->printAllGameEdges();
 
+        printBoard2();
         cout << endl;
     }
 
@@ -124,7 +275,7 @@ namespace ariel
         {
             i = i % 3;
             bool continueMyturn = true;
-            cout << "Player " << players[i].getName() << "'s turn" << endl;
+            cout << "Player " << players[i].get().getName() << "'s turn" << endl;
             int dice = (rand() % 6 + 1) + (rand() % 6 + 1);
             cout << "You rolled a " << dice << endl;
             dealResurces(dice);
@@ -148,7 +299,7 @@ namespace ariel
                 if (option == 1)
                 {
                     cout << "Build:" << endl;
-                    players[i].build();
+                    players[i].get().build();
                 }
                 else if (option == 2)
                 {
@@ -193,8 +344,8 @@ namespace ariel
                  << endl;
             cin >> place;
         }
-        gameNode[place] = make_pair(&players[playerIndex], "Village");
-        players[playerIndex].addVillage();
+        gameNode[place] = make_pair(&players[playerIndex].get(), "Village");
+        players[playerIndex].get().addVillage();
         cout << "Village placed successfully!" << endl;
     }
 
@@ -210,7 +361,7 @@ namespace ariel
             cout << "Invalid option, please choose again" << endl;
             cin >> option;
         }
-        players[playerIndex].addRoad();
+        players[playerIndex].get().addRoad();
         setGameEdges(roadOption[option].first, roadOption[option].second, players[playerIndex]);
 
         cout << "Road placed successfully!" << endl;
@@ -228,8 +379,8 @@ namespace ariel
             cout << "Invalid option, please choose again" << endl;
             cin >> place;
         }
-        gameNode[cityOption[place]] = make_pair(&players[playerIndex], "City");
-        players[playerIndex].addCity();
+        gameNode[cityOption[place]] = make_pair(&players[playerIndex].get(), "City");
+        players[playerIndex].get().addCity();
         cout << "City placed successfully!" << endl;
     }
 
@@ -237,7 +388,7 @@ namespace ariel
     {
         for (int i = 0; i < 54; i++)
         {
-            gameNode.push_back(make_pair(nullptr, ""));
+            gameNode[i] = (make_pair(nullptr, ""));
         }
     }
 
@@ -339,7 +490,7 @@ namespace ariel
                 cout << "(" << edge.first << ", " << edge.second << ")";
                 if (player)
                 {
-                    cout << " - Controlled by: " << player->getName();
+                    cout << " - Controlled by: " << player->getCollor() << player->getName() << RESET;
                 }
                 cout << endl;
             }
@@ -362,7 +513,7 @@ namespace ariel
         vector<pair<int, int>> placesForRoad;
         for (const auto &[edge, player] : gameEdges)
         {
-            if (player && player == &players[playerIndex])
+            if (player && player == &players[playerIndex].get())
             {
                 for (int node : Board::node_to_adjacentNode[edge.first])
                 {
@@ -382,7 +533,7 @@ namespace ariel
         vector<int> placesForCity;
         for (int i = 0; i < gameNode.size(); i++)
         {
-            if (gameNode[i].first == &players[playerIndex] && gameNode[i].second == "Village")
+            if (gameNode[i].first == &players[playerIndex].get() && gameNode[i].second == "Village")
             {
                 placesForCity.push_back(i);
             }
@@ -457,4 +608,20 @@ namespace ariel
         os << "(Player: " << p.first << ", String: " << p.second << ")";
         return os;
     }
+
+    string operator*(const string &s, int n)
+    {
+        std::string result;
+        for (int i = 0; i < n; ++i)
+        {
+            result += s;
+        }
+        return result;
+    }
+
+    string operator*(int n, const string &s)
+    {
+        return s * n; // Reuse the above function
+    }
+
 }

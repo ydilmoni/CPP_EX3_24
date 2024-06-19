@@ -71,132 +71,10 @@ namespace ariel
         tiles[location].setType(newType);
     }
 
-    void Board::printBoard() const
-    {
-        cout << endl;
-        cout << endl;
-        std::vector<int> rows = {3, 4, 5, 4, 3};
-        int index = 0;
-        for (int row : rows)
-        {
-            for (int i = 0; i < 5 - row; i++)
-            {
-                cout << "      ";
-            }
 
-            for (int i = 0; i < row; i++)
-            {
-                if (tiles[index].getType() == "W")
-                {
-                    cout << BROWN << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-                else if (tiles[index].getType() == "B")
-                {
-                    cout << RED << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-                else if (tiles[index].getType() == "G")
-                {
-                    cout << YELLOW << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-                else if (tiles[index].getType() == "S")
-                {
-                    cout << WHITE << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-                else if (tiles[index].getType() == "O")
-                {
-                    cout << BLACK << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-                else if (tiles[index].getType() == "D")
-                {
-                    cout << CAMEL << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
-                }
-
-                // tiles[index].printTile();
-                if (i < row - 1)
-                    std::cout << "   ";
-                index++;
-            }
-            cout << endl;
-            cout << endl;
-            cout << endl;
-        }
-    }
-
-    void Board::printBoard2()
-    {
-        string output = "";
-        output += "                                                                       \n";
-        output += "                                [0]-(0)-[1]                              \n";
-        output += "                                /         \\                              \n";
-        output += "                              (1)         (2)                              \n";
-        output += "                              /             \\                              \n";
-        output += "                    [2]-(0)-[3]     " +p(0)+ "      [4]-(0)-[5]   \n" ;
-        output += "                   /          \\             /          \\                                       \n";
-        output += "                 (0)          (0)         (0)          (0)                              \n";
-        output += "                 /              \\         /              \\                           \n";
-        output += "      [6]-(0)-[7]      " +p(1)+ "       [8]-(0)-[9]      " +p(2)+ "     [10]-(0)-[11]                              \n";
-        output += "      /          \\             /          \\             /          \\                                       \n";
-        output += "    (0)          (0)         (0)          (0)         (0)          (0)                             \n";
-        output += "    /              \\         /              \\         /              \\                            \n";
-        output += "  [12]     " +p(3)+ "    [13]-(0)-[14]     " +p(4)+ "     [15]-(0)-[16]      " +p(5)+ "     [17]                                   \n";
-        output += "    \\             /          \\             /          \\              /                                        \n";
-        output += "    (0)         (0)          (0)         (0)          (0)          (0)                              \n";
-        output += "      \\         /              \\         /              \\          /                            \n";
-        output += "     [18]-(0)-[19]     " +p(6)+ "    [20]-(0)-[21]     " +p(7)+ "     [22]-(0)-[23]                                   \n";
-        output += "      /          \\             /          \\             /          \\                                        \n";
-        output += "    (0)          (0)         (0)          (0)         (0)          (0)                              \n";
-        output += "    /              \\         /              \\         /              \\                            \n";
-        output += "  [24]    " +p(8)+ "     [25]-(0)-[26]      " +p(9)+ "     [27]-(0)-[28]     " +p(10)+ "     [29]                                   \n";
-        output += "    \\             /          \\             /          \\              /                                       \n";
-        output += "    (0)         (0)          (0)         (0)          (0)          (0)                              \n";
-        output += "      \\         /              \\         /              \\          /                            \n";
-        output += "     [30]-(0)-[31]     " +p(11)+ "     [32]-(0)-[33]     " +p(12)+ "     [34]-(0)-[35]                                    \n";
-        output += "      /          \\             /          \\             /          \\                                       \n";
-        output += "    (0)          (0)         (0)          (0)         (0)          (0)                              \n";
-        output += "    /              \\         /              \\         /              \\                            \n";
-        output += "  [36]     " +p(13)+ "     [37]-(0)-[38]     " +p(14)+ "     [39]-(0)-[40]     " +p(15)+ "     [41]                              \n";
-        output += "    \\             /          \\             /          \\              /                                        \n";
-        output += "    (0)         (0)          (0)         (0)          (0)          (0)                             \n";
-        output += "      \\         /              \\         /              \\          /                           \n";
-        output += "     [42]-(0)-[43]     " +p(16)+ "     [44]-(0)-[45]     " +p(17)+ "      [46]-(0)-[47]                                    \n";
-        output += "                 \\             /          \\             /                                                 \n";
-        output += "                 (0)         (0)          (0)         (0)                           \n";
-        output += "                   \\         /              \\         /                                 \n";
-        output += "                  [48]-(0)-[49]     " +p(18)+ "     [50]-(0)-[51]                                         \n";
-        output += "                              \\             /                                            \n";
-        output += "                              (0)         (0)                                  \n";
-        output += "                                \\         /                                   \n";
-        output += "                               [52]-(0)-[53]                                          \n";
-
-        
-        cout<<"rint the board"<<endl;
-        cout<<output<<endl;
-    }
-
-    Board::Board()
+      Board::Board()
     {
         initializingTiles();
-    }
-
-    string Board::p(int tileNum)
-    {
-        string result = string(this->tiles[tileNum].collor) + this->tiles[tileNum].getType() + string(this->tiles[tileNum].collor) +to_string(this->tiles[tileNum].getNum())  + string(RESET); 
-        return result;
-    }
-
-    string Board::pr(int start, int end, string whatToPrint){
-        map<pair<int, int>, Player *> map = Catan::gameEdges; 
-        string result;
-        string collor = RESET;
-        for (const auto &[edge, player] : map)
-        {
-            if (edge.first == start && edge.second == end && player!= nullptr) 
-            {
-                collor = player->collor;
-            }
-        }
-        result = string(collor)+whatToPrint+string(RESET); 
-        return result;
     }
 
     std::map<int, std::vector<int>> Board::tileLocation_to_adjacentNode ={
@@ -335,4 +213,57 @@ namespace ariel
         {53, {50,52}}
         };
 
+    // void Board::printBoard() const
+    // {
+    //     cout << endl;
+    //     cout << endl;
+    //     std::vector<int> rows = {3, 4, 5, 4, 3};
+    //     int index = 0;
+    //     for (int row : rows)
+    //     {
+    //         for (int i = 0; i < 5 - row; i++)
+    //         {
+    //             cout << "      ";
+    //         }
+
+    //         for (int i = 0; i < row; i++)
+    //         {
+    //             if (tiles[index].getType() == "W")
+    //             {
+    //                 cout << BROWN << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+    //             else if (tiles[index].getType() == "B")
+    //             {
+    //                 cout << RED << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+    //             else if (tiles[index].getType() == "G")
+    //             {
+    //                 cout << YELLOW << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+    //             else if (tiles[index].getType() == "S")
+    //             {
+    //                 cout << WHITE << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+    //             else if (tiles[index].getType() == "O")
+    //             {
+    //                 cout << BLACK << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+    //             else if (tiles[index].getType() == "D")
+    //             {
+    //                 cout << CAMEL << setw(5) << tiles[index].getType() << "(" << tiles[index].getNum() << ")" << RESET;
+    //             }
+
+    //             // tiles[index].printTile();
+    //             if (i < row - 1)
+    //                 std::cout << "   ";
+    //             index++;
+    //         }
+    //         cout << endl;
+    //         cout << endl;
+    //         cout << endl;
+    //     }
+    // }
+
+
+  
 }

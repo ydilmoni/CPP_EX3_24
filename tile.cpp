@@ -45,6 +45,30 @@ namespace ariel
     void Tile::setType(string newType)
     {
         this->landType = newType;
+        if (landType == "W")
+        {
+            this->collor = BROWN;
+        }
+        else if (landType == "G")
+        {
+            this->collor = YELLOW;
+        }
+        else if (landType == "O")
+        {
+            this->collor = BLACK;
+        }
+        else if (landType == "S")
+        {
+            this->collor = WHITE;
+        }
+        else if (landType == "B")
+        {
+            this->collor = RED;
+        }
+        else
+        {
+            this->collor = CAMEL;
+        }
     }
     int Tile::getNum() const
     {

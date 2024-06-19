@@ -5,6 +5,10 @@
 #include <map>
 #include <vector>
 
+#define BLUE "\033[34m"        /* Blue */
+#define GREEN "\033[32m"       /* Green */
+#define PURPLE "\033[35m"      /* Purple */
+
 using namespace std;
 
 namespace ariel
@@ -26,7 +30,10 @@ namespace ariel
 
         Player(string name);
         Player();
+       
+
         void setCollor(string newCollor);
+        string getCollor() const;
         void setName(string newName);
         string getName() const;
         void addResurces(string resourceToAdd);
