@@ -183,6 +183,27 @@ namespace ariel
         return false;
     }
 
+    bool Player::iCanBuild(string building)
+    {
+        if (building == "Road" && iHave("B")){
+            return true;
+        }
+
+         if (building == "Village" && iHave("B") && iHave("W")&& iHave("G") &&iHave("S")){
+            return true;
+        }
+
+        if (building == "City" && iHave("G",2) &&iHave("O",3) )
+        {
+            return true;
+        }
+        if (building == "Buy Development Card" && iHave("O") && iHave("G") && iHave("S"))
+        {
+            return true;
+        }
+        return false;
+    }
+
     vector<string> Player::iHave()
     {
         vector<string> resurceIhave;
@@ -238,5 +259,16 @@ namespace ariel
     }
     void Player::useDevelopmentCard()
     {
+    }
+    void Player::printMyCard()
+    {
+        cout << "Player " << this->name << " have: " << endl;
+        cout << "Wood: " << this->playerCard["W"] << endl; 
+        cout << "Brick: " << this->playerCard["B"] << endl;
+        cout << "Sheep: " << this->playerCard["S"] << endl;
+        cout << "Grain: " << this->playerCard["G"] << endl;
+        cout << "Ore: " << this->playerCard["O"] << endl;
+
+
     }
 };

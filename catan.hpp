@@ -37,9 +37,12 @@ namespace ariel
         // Rest of the game:
         void restOfGame(); // Rest of the game.
         void selectFunction();
+        void iCanBuild(int playerIndex);
         void putVillage(int playerIndex); // Build a village in the rest of the game.
         void putRoad(int playerIndex);    // Build a road in the rest of the game.
         void putCity(int playerIndex);
+        void trade(int playerIndex);
+        void buyDvlpCard(int playerIndex);
 
         // node
         void initializingGameNode();                                          // initializing all the node to nullptr in the start of the game

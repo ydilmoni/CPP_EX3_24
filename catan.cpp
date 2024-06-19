@@ -33,8 +33,8 @@ namespace ariel
             cout << players[i].get().getCollor() << players[i].get().getName() << " collor" << RESET << endl;
         }
 
-        // this->startGame();
-        // this->printBoard2();
+        this->startGame();
+        this->restOfGame();
     }
 
     Catan::Catan()
@@ -75,7 +75,7 @@ namespace ariel
 
     string Catan::pr(int start, int end)
     {
-        return p2(start) +string(RESET)+ "-"+ pr(start, end, "(R)") +string(RESET)+ "-"+ p2(end);
+        return p2(start) + string(RESET) + "-" + pr(start, end, "(R)") + string(RESET) + "-" + p2(end);
     }
 
     string Catan::p2(int nodeNum)
@@ -88,32 +88,33 @@ namespace ariel
                 {
                     if (gameNode[i].second == "Village")
                     {
-                        return string(gameNode[i].first->getCollor()) + "[" + to_string(i) + "]"+string(RESET);
+                        return string(gameNode[i].first->getCollor()) + "[" + to_string(i) + "]" + string(RESET);
                     }
                     else if (gameNode[i].second == "City")
                     {
-                        return string(gameNode[i].first->getCollor()) + "{" + to_string(i) + "}"+string(RESET);
+                        return string(gameNode[i].first->getCollor()) + "{" + to_string(i) + "}" + string(RESET);
                     }
                 }
                 else
                 {
-                    return string(RESET) + "[" + to_string(i) + "]" +string(RESET);
+                    return string(RESET) + "[" + to_string(i) + "]" + string(RESET);
                 }
             }
         }
         cout << "cant find this num" << endl;
+        return "";
     }
 
     string Catan::d1(int start, int end)
     {
         return pr(start, end, "/");
     }
-    
+
     string Catan::d2(int start, int end)
     {
         return pr(start, end, "\\");
     }
-    
+
     string Catan::m(int start, int end)
     {
         return pr(start, end, "(R)");
@@ -275,46 +276,52 @@ namespace ariel
         {
             i = i % 3;
             bool continueMyturn = true;
-            cout << "Player " << players[i].get().getName() << "'s turn" << endl;
+            cout << "Player " << players[i].get().getCollor() << players[i].get().getName() << "'s turn" << RESET << endl;
             int dice = (rand() % 6 + 1) + (rand() % 6 + 1);
             cout << "You rolled a " << dice << endl;
             dealResurces(dice);
 
             while (continueMyturn)
             {
+                cout << RESET << endl;
+                printBoard2();
+                cout << "Player " << players[i].get().getCollor() << players[i].get().getName() << "'s turn" << endl;
+                cout << "your card are: " << endl;
+                players[i].get().printMyCard();
                 int option;
 
                 cout << "What would you like to do?" << endl;
-                cout << "1.   Build" << endl;
-                cout << "2.   Trade" << endl;
-                cout << "3.   Use a Development Card" << endl;
-                cout << "4.   End Turn" << endl;
-                cout << "5.   I win" << endl;
+                cout << "0.   Build" << endl;
+                cout << "1.   Trade" << endl;
+                cout << "2.   Use a Development Card" << endl;
+                cout << "3.   End Turn" << endl;
+                cout << "4.   I win" << endl;
                 cin >> option;
-                while (option < 1 || option > 5)
+                while (option < 0 || option > 4)
                 {
                     cout << "Invalid option, please choose again" << endl;
                     cin >> option;
                 }
-                if (option == 1)
+                if (option == 0)
                 {
                     cout << "Build:" << endl;
-                    players[i].get().build();
+                    iCanBuild(i);
+                }
+                else if (option == 1)
+                {
+                    cout << "Trade:" << endl;
+                    trade(i);
                 }
                 else if (option == 2)
                 {
-                    cout << "Trade:" << endl;
-                }
-                else if (option == 3)
-                {
                     cout << "Use a Development Card:" << endl;
                 }
-                else if (option == 4)
+                else if (option == 3)
                 {
                     cout << "End Turn." << endl;
                     continueMyturn = false;
                 }
-                else if (option == 5)
+                else if (option == 4)
                 {
                     cout << "I win" << endl;
                     continueMyturn = false;
@@ -326,8 +333,62 @@ namespace ariel
         cout << "END THE GAME!!" << endl;
     }
 
-    void Catan::selectFunction()
+    void Catan::iCanBuild(int playerIndex)
     {
+        vector<string> buildOption = {"Raod", "Village", "City", "Buy Development Card", "Nothing, go back"};
+
+        cout << "what to build: " << endl;
+        int i;
+        for (i = 0; i < buildOption.size(); i++)
+        {
+            cout << "(" << to_string(i) << ") " << buildOption[i] << endl;
+        }
+
+        int whatToBuild;
+
+        cout << "What do you want to build? (choose a number) " << endl;
+        cin >> whatToBuild;
+        while (whatToBuild < 0 || whatToBuild > 4)
+        {
+            cout << "choose a number" << endl;
+            cin >> whatToBuild;
+        }
+        if (whatToBuild == 0)
+        {
+            if (players[playerIndex].get().iCanBuild("Road"))
+            {
+                putRoad(playerIndex);
+            }
+            else
+            {
+                cout << "You don't have the resources to build a road" << endl;
+            }
+        }
+        else if (whatToBuild == 1)
+        {
+            if (players[playerIndex].get().iCanBuild("Village"))
+            {
+                putVillage(playerIndex);
+            }
+            else
+            {
+                cout << "You don't have the resources to build a village" << endl;
+            }
+        }
+        else if (whatToBuild == 2)
+        {
+            if (players[playerIndex].get().iCanBuild("City"))
+            {
+                putCity(playerIndex);
+            }
+            else
+            {
+                cout << "You don't have the resources to build a city" << endl;
+            }
+        }
+        // else if (myChoice == "Buy Development Card"){
+        //     buyDvlpCard(playerIndex);
+        // }
     }
 
     void Catan::putVillage(int playerIndex)
@@ -335,18 +396,24 @@ namespace ariel
         int place;
         cout << "Where would you like to build your village?" << endl;
         vector<int> villageOption = getPlaceForVillageByPlayerIndex(playerIndex);
-        cin >> place;
-
-        while (place < 1 || place > 54 || gameNode[place].first != NULL)
+        villageOption.push_back(-1);
+        for (int i = 0; i < villageOption.size(); i++)
         {
-            cout << "You have chosen a place that is already occupied or does not exist because it is not in the range 1-54,\
-                 please choose another place"
-                 << endl;
+            cout << "(" << to_string(i) << ")" << to_string(villageOption[i])<<endl;
+        }
+
+        cin >> place;
+        while (place < -1 || place >= villageOption.size())
+        {
+            cout << "Invalid choice. Please choose again." << endl;
             cin >> place;
         }
-        gameNode[place] = make_pair(&players[playerIndex].get(), "Village");
-        players[playerIndex].get().addVillage();
-        cout << "Village placed successfully!" << endl;
+        if (villageOption[place] != -1)
+        {
+            gameNode[villageOption[place]] = make_pair(&players[playerIndex].get(), "Village");
+            players[playerIndex].get().build("Village");
+            cout << "Village placed successfully!" << endl;
+        }
     }
 
     void Catan::putRoad(int playerIndex)
@@ -361,7 +428,7 @@ namespace ariel
             cout << "Invalid option, please choose again" << endl;
             cin >> option;
         }
-        players[playerIndex].get().addRoad();
+        players[playerIndex].get().build("Road");
         setGameEdges(roadOption[option].first, roadOption[option].second, players[playerIndex]);
 
         cout << "Road placed successfully!" << endl;
@@ -372,7 +439,6 @@ namespace ariel
         int place;
         cout << "Where would you like to build your city?" << endl;
         vector<int> cityOption = getPlaceForCityByPlayerIndex(playerIndex);
-        printVector(cityOption);
         cin >> place;
         while (place < 0 || place > cityOption.size() - 1)
         {
@@ -380,8 +446,46 @@ namespace ariel
             cin >> place;
         }
         gameNode[cityOption[place]] = make_pair(&players[playerIndex].get(), "City");
-        players[playerIndex].get().addCity();
+        players[playerIndex].get().build("City");
         cout << "City placed successfully!" << endl;
+    }
+
+    void Catan::trade(int playerIndex)
+    {
+        vector<string> resources = {"B", "W", "S", "G", "O"};
+        cout << "What would you like to trade?" << endl;
+        for (int i = 0; i < resources.size(); i++)
+        {
+            cout << i << ". " << resources[i] << endl;
+        }
+        int option;
+        cin >> option;
+        while (option < 0 || option > resources.size() - 1)
+        {
+            cout << "Invalid option, please choose again" << endl;
+            cin >> option;
+        }
+        string resource = resources[option];
+
+        if (players[playerIndex].get().iHave(resource, 4))
+        {
+
+            cout << "What would you like to trade for?" << endl;
+            for (int i = 0; i < resources.size(); i++)
+            {
+                cout << i << ". " << resources[i] << endl;
+            }
+            int tradeOption;
+            cin >> tradeOption;
+            while (tradeOption < 0 || tradeOption > resources.size() - 1)
+            {
+                cout << "Invalid option, please choose again" << endl;
+                cin >> tradeOption;
+            }
+            string tradeResource = resources[tradeOption];
+            players[playerIndex].get().removeResurces(resource, 4);
+            players[playerIndex].get().addResurces(tradeResource);
+        }
     }
 
     void Catan::initializingGameNode()
@@ -559,7 +663,13 @@ namespace ariel
                 }
                 if (canBuild)
                 {
-                    placesForVillage.push_back(i);
+                    for (const auto&[edge, player]:gameEdges){
+                        if ((edge.first == i || edge.second == i) && player == &players[playerIndex].get()){
+                            placesForVillage.push_back(i);
+                        }
+
+                    }
+                    
                 }
             }
         }
@@ -623,5 +733,4 @@ namespace ariel
     {
         return s * n; // Reuse the above function
     }
-
 }
