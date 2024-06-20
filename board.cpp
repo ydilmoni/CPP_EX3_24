@@ -71,8 +71,7 @@ namespace ariel
         tiles[location].setType(newType);
     }
 
-
-      Board::Board()
+    Board::Board()
     {
         initializingTiles();
     }

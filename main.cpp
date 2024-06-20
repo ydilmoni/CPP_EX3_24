@@ -4,7 +4,7 @@
 #include "function.cpp"
 using namespace ariel;
 
-//TODO: לבדוק למה לא רץ
+
 int main() {
    ariel::Catan catan;
    

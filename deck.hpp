@@ -20,6 +20,8 @@ namespace ariel
         int size = cardDeck.size();
         stack<string> deck;
         void printDeck();
+        void addToDeck(string card);
+        void addToDeck(string card,int amount);
 
     private:
         void ShuffleCards();

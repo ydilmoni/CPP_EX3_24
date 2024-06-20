@@ -26,6 +26,7 @@ namespace ariel
         int used_village;
         int used_city;
         int public_score;
+        int usedKnight;
         string collor;
 
         Player(string name);
@@ -52,9 +53,11 @@ namespace ariel
         void addRoad();
         void addVillage();
         void addCity();
-        void buyDevelopmentCard();
-        void useDevelopmentCard();
+        // void buyDevelopmentCard();
+        // void useDevelopmentCard();
         void printMyCard();
+        vector <string> getMyDVLPCard();
+        int getAmountOfResource(string resource);
     };
 
 }

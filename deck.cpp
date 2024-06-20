@@ -9,38 +9,20 @@
 namespace ariel
 {
 
-    Deck::Deck()  // Development card deck
+    Deck::Deck() // Development card deck
     {
+        addToDeck("knight", 19);
+        addToDeck("victory point", 4);
+        addToDeck("monopoly", 2);
+        addToDeck("build 2 road", 2);
+        addToDeck("year of plenty", 2);
 
-        for (int i = 0; i < 19; i++)
-        {
-            cardDeck.push_back("knight");
-        }
-        for (int i = 0; i < 4; i++)
-        {
-            cardDeck.push_back("victory point");
-        }
-        for (int i = 0; i < 2; i++)
-        {
-            cardDeck.push_back("build 2 road");
-        }
-        for (int i = 0; i < 2; i++)
-        {
-            cardDeck.push_back("year of plenty");
-        }
-        for (int i = 0; i < 2; i++)
-        {
-            cardDeck.push_back("monopoly");
-        }
         ShuffleCards();
     }
 
-    Deck::Deck(string source)  // Sources card decks
+    Deck::Deck(string source) // Sources card decks
     {
-        for (int i = 0; i < 19; i++)
-        {
-            cardDeck.push_back(source);
-        }
+        addToDeck(source, 19);
     }
 
     void Deck::ShuffleCards() // this function from chatGPT
@@ -49,21 +31,22 @@ namespace ariel
         random_device rd;
         mt19937 g(rd());
         shuffle(cardDeck.begin(), cardDeck.end(), g);
-
     }
 
     string Deck::drawCard()
     {
-        if (isEmpty())
+        if (this->isEmpty())
         {
             cout << "No more cards to draw" << endl;
-            return NULL;
+            return "";
         }
-
-        string card = cardDeck.back();
-        cardDeck.pop_back();
-        size--;
-        return card;
+        else
+        {
+            string card = cardDeck.back();
+            cardDeck.pop_back();
+            size--;
+            return card;
+        }
     }
 
     bool Deck::isEmpty() const
@@ -76,6 +59,18 @@ namespace ariel
         for (size_t i = 0; i < cardDeck.size(); i++)
         {
             cout << cardDeck[i] << endl;
+        }
+    }
+    void Deck::addToDeck(string card)
+    {
+        addToDeck(card, 1);
+    }
+    void Deck::addToDeck(string card, int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            cardDeck.push_back(card);
+            size++;
         }
     }
 }

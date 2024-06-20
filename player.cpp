@@ -4,7 +4,7 @@ namespace ariel
 {
     Player::Player(string playerName)
         : name(playerName), score(0), private_score(0), used_road(0), used_village(0),
-          used_city(0), public_score(0)
+          used_city(0), public_score(0), usedKnight(0)
     {
 
         playerCard["W"] = 0;
@@ -13,7 +13,7 @@ namespace ariel
         playerCard["S"] = 0;
         playerCard["O"] = 0;
         playerCard["knight"] = 0;
-        playerCard["victory_point"] = 0;
+        playerCard["victory point"] = 0;
         playerCard["build 2 road"] = 0;
         playerCard["year of plenty"] = 0;
         playerCard["monopoly"] = 0;
@@ -64,41 +64,41 @@ namespace ariel
 
     void Player::trade()
     {
-        vector<string> resurceIhave=iHave();
-        vector <string> allResurces = {"W", "O", "G", "S", "B"};
+        vector<string> resurceIhave = iHave();
+        vector<string> allResurces = {"W", "O", "G", "S", "B"};
         int wantToTrade;
-        cout << "What do you want to give?"<<endl;
-        for (size_t i = 0; i < resurceIhave.size() ; i++)  
+        cout << "What do you want to give?" << endl;
+        for (size_t i = 0; i < resurceIhave.size(); i++)
         {
-            cout<<"("<<i<<") "<<resurceIhave[i]<<endl;
+            cout << "(" << i << ") " << resurceIhave[i] << endl;
         }
 
-        cin>>wantToTrade;
-        while(wantToTrade<0 || wantToTrade>resurceIhave.size()){
-            cout<<"Invalid input, please try again."<<endl;
-            cin>>wantToTrade;
+        cin >> wantToTrade;
+        while (wantToTrade < 0 || wantToTrade > resurceIhave.size())
+        {
+            cout << "Invalid input, please try again." << endl;
+            cin >> wantToTrade;
         }
-        cout << "What do you want to get?"<<endl;     
-        for (size_t i = 0; i < allResurces.size() ; i++){
-            cout<<"("<<i<<") "<<allResurces[i]<<endl;
+        cout << "What do you want to get?" << endl;
+        for (size_t i = 0; i < allResurces.size(); i++)
+        {
+            cout << "(" << i << ") " << allResurces[i] << endl;
         }
         int wantToGet;
-        cin>>wantToGet;
-        while(wantToGet<0 || wantToGet>allResurces.size()){
-            cout<<"Invalid input, please try again."<<endl; 
-            cin>>wantToGet;
+        cin >> wantToGet;
+        while (wantToGet < 0 || wantToGet > allResurces.size())
+        {
+            cout << "Invalid input, please try again." << endl;
+            cin >> wantToGet;
         }
-        cout << "Did someone want to trade?"<<endl;
-        cout<<"0 - no"<<endl;
-        cout<<"1 - yes"<<endl;
+        cout << "Did someone want to trade?" << endl;
+        cout << "0 - no" << endl;
+        cout << "1 - yes" << endl;
         int trade;
-        cin>>trade;
-        if(trade==1){
-            
+        cin >> trade;
+        if (trade == 1)
+        {
         }
-
-
-        
     }
 
     void Player::trade(Player &other, string iWantToGive, string iWantToGet)
@@ -125,7 +125,7 @@ namespace ariel
 
         cout << "What do you want to build? (choose a number) ";
         cin >> whatToBuild;
-        if (whatToBuild > 0 && whatToBuild < myOption.size()-1)
+        if (whatToBuild > 0 && whatToBuild < myOption.size() - 1)
         {
             this->build(myOption[whatToBuild]);
         }
@@ -158,7 +158,11 @@ namespace ariel
             this->removeResurces("O");
             this->removeResurces("G");
             this->removeResurces("S");
-            this->buyDevelopmentCard();
+            // this->buyDevelopmentCard();
+        }
+        else if (whatToBuild == "freeRoad")
+        {
+            this->addRoad();
         }
         else
         {
@@ -185,15 +189,17 @@ namespace ariel
 
     bool Player::iCanBuild(string building)
     {
-        if (building == "Road" && iHave("B")){
+        if (building == "Road" && iHave("B") & iHave("W"))
+        {
             return true;
         }
 
-         if (building == "Village" && iHave("B") && iHave("W")&& iHave("G") &&iHave("S")){
+        if (building == "Village" && iHave("B") && iHave("W") && iHave("G") && iHave("S"))
+        {
             return true;
         }
 
-        if (building == "City" && iHave("G",2) &&iHave("O",3) )
+        if (building == "City" && iHave("G", 2) && iHave("O", 3))
         {
             return true;
         }
@@ -207,10 +213,11 @@ namespace ariel
     vector<string> Player::iHave()
     {
         vector<string> resurceIhave;
-        vector <string> allResurces = {"W", "O", "G", "S", "B"};
+        vector<string> allResurces = {"W", "O", "G", "S", "B"};
         for (int i = 0; i < allResurces.size(); i++)
         {
-            if (iHave(allResurces[i])){
+            if (iHave(allResurces[i]))
+            {
                 resurceIhave.push_back(allResurces[i]);
             }
         }
@@ -254,21 +261,53 @@ namespace ariel
     {
         used_city++;
     }
-    void Player::buyDevelopmentCard()
-    {
-    }
-    void Player::useDevelopmentCard()
-    {
-    }
+   
     void Player::printMyCard()
     {
         cout << "Player " << this->name << " have: " << endl;
-        cout << "Wood: " << this->playerCard["W"] << endl; 
+        cout << endl;
         cout << "Brick: " << this->playerCard["B"] << endl;
+        cout << "Wood: " << this->playerCard["W"] << endl;
         cout << "Sheep: " << this->playerCard["S"] << endl;
         cout << "Grain: " << this->playerCard["G"] << endl;
         cout << "Ore: " << this->playerCard["O"] << endl;
-
-
+        cout << endl;
+        cout << "knight: " << this->playerCard["knight"] << endl;
+        cout << "victory point: " << this->playerCard["victory point"] << endl;
+        cout << "build 2 road: " << this->playerCard["build 2 road"] << endl;
+        cout << "year of plenty: " << this->playerCard["year of plenty"] << endl;
+        cout << "monopoly: " << this->playerCard["monopoly"] << endl<<endl;
     }
+
+    vector <string> Player::getMyDVLPCard()
+    {
+        int i = 0;
+        vector <string> devCards{4,};
+        if (playerCard["knight"] > 0)
+        {
+            devCards[i]="knight";
+            i++;
+        }
+        
+        if (playerCard["build 2 road"] > 0){
+            devCards[i]="build 2 road";
+            i++;
+        }
+        if (playerCard["year of plenty"] > 0){
+            devCards[i]="year of plenty";
+            i++;
+        }
+        if (playerCard["monopoly"] > 0){
+            devCards[i]="monopoly";
+            i++;
+        }
+        devCards.resize(i);
+        return devCards;
+    }
+    
+    int Player::getAmountOfResource(string resource)
+    {
+        return playerCard[resource];
+    }
+
 };

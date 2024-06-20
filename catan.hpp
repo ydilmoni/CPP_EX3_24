@@ -17,12 +17,7 @@ namespace ariel
     public:
         vector<reference_wrapper<Player>> players;
         Board board;
-        Deck dvlpCardDeck = Deck();
-        Deck woodDeck = Deck("wood");
-        Deck brickDeck = Deck("brick");
-        Deck grainDeck = Deck("grain");
-        Deck oreDeck = Deck("ore");
-        Deck sheepDeck = Deck("wool");
+        map<string,Deck> decks;
 
         map<pair<int, int>, Player *> gameEdges;
         vector<pair<Player *, string>> gameNode;
@@ -33,16 +28,23 @@ namespace ariel
         void startGame();                  // First 2 village.
         void first2village();              // Loop to make the first two village build rotation.
         void putVillageAndRoad(int index); // Function to help build the fiest 2 vilage and road.
+        void buildFreeRoad(int playerIndex, int place);
 
         // Rest of the game:
         void restOfGame(); // Rest of the game.
-        void selectFunction();
-        void iCanBuild(int playerIndex);
+        void iCanBuild(int playerIndex);  // check if i can build
         void putVillage(int playerIndex); // Build a village in the rest of the game.
         void putRoad(int playerIndex);    // Build a road in the rest of the game.
         void putCity(int playerIndex);
         void trade(int playerIndex);
-        void buyDvlpCard(int playerIndex);
+        void buyDevelopmentCard(int playerIndex);
+        void chooseDevelopmentCard(int playerIndex);
+        void useDevelopmentCard(string card, int playerIndex);
+        void useRoadBuilding(int playerIndex);
+        void useMonopoly(int playerIndex);
+        void useYearOfPlenty(int playerIndex);
+        void returnCardToDeck(string card, int amount);
+        void returnCardToDeck(string card);
 
         // node
         void initializingGameNode();                                          // initializing all the node to nullptr in the start of the game
@@ -66,7 +68,7 @@ namespace ariel
 
         // Print:
         void printOptionFromVector(vector<int> &vec) const;
-
+        void printVector(vector<string> &vec)const;
         void printVector(vector<int> &vec)
         {
             for (int i = 0; i < vec.size(); i++)
