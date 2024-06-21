@@ -7,10 +7,10 @@ namespace ariel
           used_city(0), public_score(0), usedKnight(0)
     {
 
-        playerCard["W"] = 0;
         playerCard["B"] = 0;
-        playerCard["G"] = 0;
+        playerCard["W"] = 0;
         playerCard["S"] = 0;
+        playerCard["G"] = 0;
         playerCard["O"] = 0;
         playerCard["knight"] = 0;
         playerCard["victory point"] = 0;
@@ -149,15 +149,15 @@ namespace ariel
         }
         else if (whatToBuild == "City")
         {
-            this->removeResurces("O", 3);
             this->removeResurces("G", 2);
+            this->removeResurces("O", 3);
             this->addCity();
         }
         else if (whatToBuild == "Buy Development Card")
         {
-            this->removeResurces("O");
-            this->removeResurces("G");
             this->removeResurces("S");
+            this->removeResurces("G");
+            this->removeResurces("O");
             // this->buyDevelopmentCard();
         }
         else if (whatToBuild == "freeRoad")
@@ -279,6 +279,11 @@ namespace ariel
         cout << "monopoly: " << this->playerCard["monopoly"] << endl<<endl;
     }
 
+    void Player::printMyTradeOption(){
+        printMyResources();
+        cout << "5. knight: " << this->playerCard["knight"] << endl;
+    }
+
     vector <string> Player::getMyDVLPCard()
     {
         int i = 0;
@@ -310,4 +315,13 @@ namespace ariel
         return playerCard[resource];
     }
 
+    void Player::printMyResources()
+    {
+        vector <string> resources({"Brick","Wood", "Sheep","Grain", "Ore"});
+        int i =0;
+        for (string resource : resources){
+            cout <<"("<<i<<") " <<resource << ": " << playerCard[resource.erase(1)] << endl;
+            i++;
+        }
+    }
 };

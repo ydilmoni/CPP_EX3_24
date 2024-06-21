@@ -37,6 +37,8 @@ namespace ariel
         void putRoad(int playerIndex);    // Build a road in the rest of the game.
         void putCity(int playerIndex);
         void trade(int playerIndex);
+        void tradeWithPlayer(int playerIndex);
+        void tradeWithGame(int playerIndex);
         void buyDevelopmentCard(int playerIndex);
         void chooseDevelopmentCard(int playerIndex);
         void useDevelopmentCard(string card, int playerIndex);
@@ -92,7 +94,7 @@ namespace ariel
             }
         }
 
-        void chackFunction();
+        void printMyResource(int playerIndex);
 
         string p(int tileNum);                               // print tile information in the collor
         string pr(int start, int end, string whatToPrint);   // print the road collor (use for diagonals)

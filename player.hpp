@@ -56,8 +56,10 @@ namespace ariel
         // void buyDevelopmentCard();
         // void useDevelopmentCard();
         void printMyCard();
-        vector <string> getMyDVLPCard();
+        void printMyTradeOption();
+        vector<string> getMyDVLPCard();
         int getAmountOfResource(string resource);
+        void printMyResources();
     };
 
 }
