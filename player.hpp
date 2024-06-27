@@ -27,12 +27,13 @@ namespace ariel
         int used_city;
         int public_score;
         int usedKnight;
+        int numOfResource;
         string collor;
 
         Player(string name);
         Player();
        
-
+        void addPrivateScore();
         void setCollor(string newCollor);
         string getCollor() const;
         void setName(string newName);
@@ -41,25 +42,25 @@ namespace ariel
         void addResurces(string resourceToAdd, int amount);
         void removeResurces(string resourceToAdd);
         void removeResurces(string resourceToAdd, int amount);
-        void trade();
-        void trade(Player &other, string iWantToGive, string iWantToGet);
+        // void trade();
+        // void trade(Player &other, string iWantToGive, string iWantToGet);
         void build();
         void build(string whatToBuild);
         bool iHave(string cardName);
         bool iHave(string cardName, int amount);
         bool iCanBuild(string building);
-        vector<string> iHave();
+        vector<string> resourcesAndKnightIHave();
         vector<string>iCanBuild();
         void addRoad();
         void addVillage();
         void addCity();
-        // void buyDevelopmentCard();
-        // void useDevelopmentCard();
         void printMyCard();
+        int cheackScore();
         void printMyTradeOption();
         vector<string> getMyDVLPCard();
         int getAmountOfResource(string resource);
         void printMyResources();
+        int getResourcesDeckSize();
     };
 
 }
