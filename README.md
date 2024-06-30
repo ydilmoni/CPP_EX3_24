@@ -1,8 +1,11 @@
-This project simulates a simplified version of the popular board game Settlers of Catan using C++ programming language. The simulation includes the game board, players, tiles, cards, and basic game mechanics. 
+This project simulates a simplified version of the popular board game Settlers of Catan using C++ programming language. 
+The simulation includes the game board, players, tiles, cards, and basic game mechanics. 
 
 Overview
 
-The project aims to recreate the fundamental aspects of Settlers of Catan in a console-based environment. It incorporates various classes such as Board, Player, Tile, Deck, and others to manage game elements and simulate gameplay.
+The project aims to recreate the fundamental aspects of Settlers of Catan in a console-based environment. 
+It incorporates various classes such as Board, Player, Tile, Deck, and others to manage game elements and simulate gameplay.
+
 
 Features
 
@@ -10,6 +13,7 @@ Board Management:
 
 Generation of randomized game boards with different types of tiles (e.g., forests, hills).
 Placement of numbers on tiles to represent resource production rates.
+
 Player Interactions:
 
 Players can build roads, settlements, and cities on the board.
