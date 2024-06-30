@@ -36,7 +36,7 @@ namespace ariel
         initializingGameEdges();
         initializingGameNode();
 
-        this->printBoard2();
+        this->printBoard();
         for (int i = 0; i < players.size(); i++)
         {
             cout << players[i].get().getCollor() << players[i].get().getName() << " collor" << RESET << endl;
@@ -87,7 +87,7 @@ namespace ariel
         this->setGameEdges(19, 25, players[0]);
         this->setGameEdges(27, 33, players[1]);
         this->setGameEdges(32, 38, players[2]);
-        printBoard2();
+        printBoard();
     }
 
     void Catan::first2village()
@@ -131,7 +131,7 @@ namespace ariel
         buildFreeRoad(playerIndex, place);
         // this->printAllGameEdges();
 
-        printBoard2();
+        printBoard();
         cout << endl;
     }
 
@@ -170,7 +170,7 @@ namespace ariel
         while (!someoneWin)
         {
             i = i % 3;
-            cout << RESET<<endl;
+            cout << RESET << endl;
             bool continueMyturn = true;
 
             cout << "what do tou want to do? \n1) use development card \n2) roll the dice" << endl;
@@ -199,9 +199,9 @@ namespace ariel
                 checkDice(dice);
                 while (continueMyturn)
                 {
-                    
+
                     cout << RESET << endl;
-                    printBoard2();
+                    printBoard();
                     cout << "You rolled a " << dice << endl;
                     // cout << "Player " << players[i].get().getCollor() << players[i].get().getName() << "'s turn" << RESET << endl;
                     cout << players[i].get().getCollor() << "Player " << players[i].get().getName() << "'s turn" << endl;
@@ -248,9 +248,9 @@ namespace ariel
                     {
                         // if (players[i].get().cheackScore() >= 10)
                         // {
-                            cout << "I win" << endl;
-                            continueMyturn = false;
-                            someoneWin = true;
+                        cout << "I win" << endl;
+                        continueMyturn = false;
+                        someoneWin = true;
                         // }
                     }
                     else
@@ -260,7 +260,7 @@ namespace ariel
                     {
                         cout << "I win" << endl;
                         someoneWin = true;
-                        continueMyturn=false;
+                        continueMyturn = false;
                     }
                 }
                 i++;
@@ -952,6 +952,14 @@ namespace ariel
         }
     }
 
+    void Catan::printVector(vector<pair<int, int>> &vec)
+    {
+         for (size_t i = 0; i < vec.size(); i++)
+         {
+             cout << "(option " << i << ") " << vec[i].first << " " << vec[i].second << endl;
+         }
+    }
+
     void Catan::printMyResource(int playerIndex)
     {
         players[playerIndex].get().printMyResources();
@@ -1010,16 +1018,6 @@ namespace ariel
         return "";
     }
 
-    string Catan::d1(int start, int end)
-    {
-        return pr(start, end, "/");
-    }
-
-    string Catan::d2(int start, int end)
-    {
-        return pr(start, end, "\\");
-    }
-
     string Catan::m(int start, int end)
     {
         return pr(start, end, "(R)");
@@ -1039,7 +1037,7 @@ namespace ariel
         return s;
     }
 
-    void Catan::printBoard2()
+    void Catan::printBoard()
     {
         string output = "";
         output += "     \n";
@@ -1097,13 +1095,13 @@ namespace ariel
         cout << output << endl;
     }
 
-    void Catan::printOptionFromVector(vector<int> &vec) const
-    {
-        for (int i = 0; i < vec.size(); i++)
-        {
-            cout << "(option " << i << ") " << vec[i] << endl;
-        }
-    }
+    // void Catan::printOptionFromVector(vector<int> &vec) const
+    // {
+    //     for (int i = 0; i < vec.size(); i++)
+    //     {
+    //         cout << "(option " << i << ") " << vec[i] << endl;
+    //     }
+    // }
 
     void Catan::printVector(vector<string> &vec) const
     {
@@ -1113,17 +1111,19 @@ namespace ariel
         }
     }
 
-    ostream &operator<<(ostream &os, pair<int, int> edge)
-    {
-        os << edge.first << ", " << edge.second << endl;
-        return os;
-    }
+    // ostream &operator<<(ostream &os, pair<int, int> edge)
+    // {
+    //     os << edge.first << ", " << edge.second << endl;
+    //     return os;
+    // }
 
-    ostream &operator<<(ostream &os, const pair<ariel::Player *, string> &p)
-    {
-        os << "(Player: " << p.first << ", String: " << p.second << ")";
-        return os;
-    }
+    // ostream &operator<<(ostream &os, const pair<ariel::Player *, string> &p)
+    // {
+    //     os << "(Player: " << p.first << ", String: " << p.second << ")";
+    //     return os;
+    // }
+
+
 
     string operator*(const string &s, int n)
     {
