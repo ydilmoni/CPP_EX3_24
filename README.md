@@ -1,10 +1,8 @@
 This project simulates a simplified version of the popular board game Settlers of Catan using C++ programming language. The simulation includes the game board, players, tiles, cards, and basic game mechanics.
 
-
 Overview
 
 The project aims to recreate the fundamental aspects of Settlers of Catan in a console-based environment. It incorporates various classes such as Board, Player, Tile, Deck, and others to manage game elements and simulate gameplay.
-
 
 Features
 
@@ -16,7 +14,6 @@ Player Interactions:
 
 Players can build roads, settlements, and cities on the board.
 Resource management for players (brick, wood, sheep, grain, ore) and development cards.
-
 
 Game Mechanics:
 
@@ -39,12 +36,10 @@ g++ main.cpp board.cpp tile.cpp deck.cpp player.cpp -o catan_simulation
 
 ./catan_simulation
 
-
 Usage
 Upon running the program, follow the prompts to set up the game and interact with the simulation.
 Players can take turns performing actions such as building roads, settlements, and cities, as well as managing resources and development cards.
 The game will display board updates, player status, and handle basic game logic to simulate gameplay.
-
 
 File Structure
 The project directory structure includes the following files:
@@ -124,3 +119,4 @@ setNum(int newNum): Sets the number on the tile.
 setType(string newType): Sets the type of the tile.
 getNum() const: Returns the number on the tile.
 getType() const: Returns the type of the tile.
+
