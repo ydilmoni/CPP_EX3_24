@@ -114,6 +114,7 @@ namespace ariel
          */
         void dealResurces(int number);
 
+        void printPlayersOrder();
     public:
         // Constructors
         /**

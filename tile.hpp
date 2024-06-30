@@ -1,6 +1,9 @@
+
+
 #ifndef TILE_HPP
 #define TILE_HPP
 
+// ANSI color codes for console output
 #define RESET "\033[0m"
 #define RED "\033[31m"         /* Red */
 #define BLACK "\033[30m"       /* Black */
@@ -12,6 +15,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream> // For std::cout, std::endl
 using namespace std;
 
 namespace ariel
@@ -19,23 +23,26 @@ namespace ariel
     class Tile
     {
     public:
-        string landType;
-        int number;
-        int tile_location;
-        string collor;
+        // Public member variables
+        string landType;         // Type of land on the tile
+        int number;              // Number on the tile
+        int tile_location;       // Location of the tile
+        string collor;           // Color of the tile
 
-        Tile(string type, int num, int location);
-        Tile() : landType("desert"), number(0), tile_location(0) , collor(CAMEL){}
-        Tile(int loc) : landType("desert"), number(0), tile_location(loc), collor(CAMEL) {}
+        // Constructors
+        Tile(string type, int num, int location);    // Parameterized constructor
+        Tile() : landType("desert"), number(0), tile_location(0), collor(CAMEL) {}   // Default constructor
+        Tile(int loc) : landType("desert"), number(0), tile_location(loc), collor(CAMEL) {} // Constructor with location
 
-        void setNum(int newNum);
-        void setType (string newType);
-        int getNum() const;
-        string getType() const;
-        // Static member declaration
-        static std::map<int, std::vector<int>> tileLocation_to_adjacentNode;
-        static std::map<int, std::vector<int>> node_to_adjacentTile;
-        
+        // Setter and getter methods
+        void setNum(int newNum);        // Sets the number on the tile
+        void setType(string newType);   // Sets the type of land on the tile
+        int getNum() const;             // Gets the number on the tile
+        string getType() const;         // Gets the type of land on the tile
+
+        // Static member declarations
+        static std::map<int, std::vector<int>> tileLocation_to_adjacentNode;   // Map of tile locations to adjacent nodes
+        static std::map<int, std::vector<int>> node_to_adjacentTile;           // Map of nodes to adjacent tiles
     };
 }
 

@@ -1,3 +1,7 @@
+
+
+
+
 #include "catan.hpp"
 #include <random>
 #include <algorithm>
@@ -37,12 +41,10 @@ namespace ariel
         initializingGameNode();
 
         this->printBoard();
-        for (int i = 0; i < players.size(); i++)
-        {
-            cout << players[i].get().getCollor() << players[i].get().getName() << " collor" << RESET << endl;
-        }
 
-        this->spacialStart();
+        this->startGame();
+        // this->spacialStart();
+        printPlayersOrder();
         this->restOfGame();
     }
 
@@ -63,7 +65,7 @@ namespace ariel
         shuffle(players.begin(), players.end(), g);
         cout << "Starting the game, the first player is " << players[0].get().getCollor() << players[0].get().getName() << RESET << endl;
         cout << endl;
-        // this_thread::sleep_for(chrono::seconds(5));
+        
 
         first2village();
     }
@@ -137,7 +139,8 @@ namespace ariel
 
     void Catan::buildFreeRoad(int playerIndex, int place)
     {
-        cout << "Choose a place to put a road: " << endl;
+
+        cout << players[playerIndex].get().getCollor() << "Choose a place to put a road: " << endl;
         vector<pair<int, int>> roadOption;
         if (place == -1)
         {
@@ -455,16 +458,17 @@ namespace ariel
         }
         cout << "How much do you want to get?" << endl;
         cin >> amountIwantToGet;
+        printPlayersOrder();
         cout << "choose player index to trade with" << endl;
         cin >> playerIndexToTradeWith;
 
         if (&players[playerIndexToTradeWith].get() && players[playerIndexToTradeWith].get().getCollor() != players[playerIndex].get().getCollor())
         {
-            if (!players[playerIndex].get().iHave(resourceIWantToGive, amountIwantTogive))
+            if ((!players[playerIndex].get().iHave(resourceIWantToGive, amountIwantTogive)) || amountIwantTogive < 1)
             {
                 return;
             }
-            if (!players[playerIndexToTradeWith].get().iHave(resourceIWantToGet, amountIwantToGet))
+            if ((!players[playerIndexToTradeWith].get().iHave(resourceIWantToGet, amountIwantToGet)) || amountIwantToGet < 1)
             {
                 return;
             }
@@ -952,12 +956,21 @@ namespace ariel
         }
     }
 
+    void Catan::printPlayersOrder()
+    {
+        cout<<RESET<<"Player Order: "<<endl;
+        for (int index = 0; index < players.size(); index++)
+        {
+            cout << players[index].get().getCollor() << "In index " << index << " you have " << players[index].get().getName() << RESET << endl;
+        }
+    }
+
     void Catan::printVector(vector<pair<int, int>> &vec)
     {
-         for (size_t i = 0; i < vec.size(); i++)
-         {
-             cout << "(option " << i << ") " << vec[i].first << " " << vec[i].second << endl;
-         }
+        for (size_t i = 0; i < vec.size(); i++)
+        {
+            cout << "(option " << i << ") " << vec[i].first << " " << vec[i].second << endl;
+        }
     }
 
     void Catan::printMyResource(int playerIndex)
@@ -1122,8 +1135,6 @@ namespace ariel
     //     os << "(Player: " << p.first << ", String: " << p.second << ")";
     //     return os;
     // }
-
-
 
     string operator*(const string &s, int n)
     {
