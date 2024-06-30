@@ -21,7 +21,6 @@ namespace ariel
 
 
     public:
-        void printBoard() const;
         std::vector<Tile> tiles;
         Board();
         static std::map<int, std::vector<int>> tileLocation_to_adjacentNode;

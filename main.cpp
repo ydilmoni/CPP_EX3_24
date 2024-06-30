@@ -1,7 +1,6 @@
 #include <iostream>
 #include "catan.hpp"
 #include <iomanip>
-#include "function.cpp"
 using namespace ariel;
 
 

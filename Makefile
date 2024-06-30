@@ -4,10 +4,10 @@ CXX=g++
 CXXFLAGS=-std=c++14 -Werror 
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 
-SOURCES=player.cpp tile.cpp cardType.hpp deck.cpp main.cpp
+SOURCES=player.cpp tile.cpp  deck.cpp main.cpp
 OBJECTS=$(subst .cpp,.o,$(SOURCES))
 
-main:tile.cpp cardType.hpp main.cpp board.cpp deck.cpp catan.cpp player.cpp
+main:tile.cpp main.cpp board.cpp deck.cpp catan.cpp player.cpp
 	$(CXX) $^ -o main.exe
 	./main.exe
 

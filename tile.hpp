@@ -9,7 +9,6 @@
 #define BROWN "\033[38;5;130m" /* Brown */
 #define CAMEL "\033[38;5;180m" /* Camel */
 
-#include "cardType.hpp"
 #include <vector>
 #include <map>
 #include <string>

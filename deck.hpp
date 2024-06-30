@@ -1,12 +1,10 @@
 #ifndef DECK_HPP
 #define DECK_HPP
 
-#include "cardType.hpp"
 #include <vector>
 #include <stack>
 #include <string>
 using namespace std;
-using namespace ariel;
 namespace ariel
 {
     class Deck
