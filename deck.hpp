@@ -1,5 +1,4 @@
-//Mail : yonidil1997@gmail.com
-//ID : 316529445
+
 #ifndef DECK_HPP
 #define DECK_HPP
 
