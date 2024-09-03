@@ -1,4 +1,5 @@
 
+
 This project simulates a simplified version of the popular board game Settlers of Catan using C++ programming language. 
 The simulation includes the game board, players, tiles, cards, and basic game mechanics. 
 
