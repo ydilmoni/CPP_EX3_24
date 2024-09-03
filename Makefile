@@ -1,6 +1,4 @@
 # #!make -f
-# #Mail : yonidil1997@gmail.com
-# #ID : 316529445
 
 CXX=g++
 CXXFLAGS=-std=c++14 -Werror 
